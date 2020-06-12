@@ -1,0 +1,30 @@
+.gameboard {
+  grid-area: gameboard;
+}
+
+.left-sidebar {
+  grid-area: left-sidebar;
+}
+.right-sidebar {
+  grid-area: right-sidebar;
+}
+
+.wrapper {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: 1fr 4fr 1fr;
+  grid-template-areas:
+    "left-sidebar gameboard right-sidebar";
+}
+
+.gameboard .card-row {
+  margin: 1em;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(15%, 1fr));
+}
+
+.gameboard .card-row .card {
+  display: flex;
+  flex-direction: column;
+}
