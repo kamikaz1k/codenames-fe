@@ -1,24 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+
+import Gameboard from './components/gameboard';
+
+const words = [
+  "camp",
+  "deer",
+  "proposal",
+  "walk",
+  "dip",
+  "screw",
+  "denial",
+  "rich",
+  "know",
+  "sheet",
+  "lose",
+  "charm",
+  "pan",
+  "researcher",
+  "tight",
+  "adoption",
+  "volcano",
+  "result",
+  "crack",
+  "lemon",
+  "domestic",
+  "aware",
+  "garbage",
+  "lover",
+  "organize"
+];
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Gameboard words={words} />
     </div>
   );
 }
