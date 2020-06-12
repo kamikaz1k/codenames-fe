@@ -1,7 +1,12 @@
 import React from 'react';
+import './Card.css';
 
-const Card = ({ classValue, word }) => (
-  <div className={classValue} style={{border: "2px black solid"}}>
+const cardStyles = {
+  border: "2px black solid"
+};
+
+const Card = ({ classValue, word, visible = false }) => (
+  <div className={classValue} style={cardStyles}>
     <p>{word}</p>
   </div>
 );
