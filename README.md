@@ -1,3 +1,10 @@
+# Codenames FE
+
+View the demo at https://kamikaz1k.github.io/codenames-fe/dev/
+
+## CRA BOILERPLATE BELOW
+==================================
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
