@@ -12,6 +12,7 @@
     "react-scripts": "3.4.1"
   },
   "scripts": {
+    "pack": "react-scripts build && cp -r build/ dev/",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
