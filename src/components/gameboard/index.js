@@ -1,12 +1,21 @@
 import React from 'react';
 import Card from '../card';
+import Scorebar from '../scorebar';
 import './Gameboard.css'
 
 const Gameboard = ({ words }) => (
   <div>
     <h1>This is a Gameboard</h1>
     <div className="wrapper">
-      <div className="left-sidebar">Sidebar</div>
+      <Scorebar
+        classValue={"left-sidebar"}
+        score={420}
+        total={9001}
+        team={"Red"}
+        players={["shoyu", "scallion", "nori"]}
+        spymaster={"chasu"}
+        />
+
       <div className="gameboard">
       {[0, 1, 2, 3, 4].map(i =>
         <div key={i} className="card-row">
@@ -16,7 +25,15 @@ const Gameboard = ({ words }) => (
         </div>
       )}
       </div>
-      <div className="right-sidebar">Sidebar</div>
+
+      <Scorebar
+        classValue={"right-sidebar"}
+        score={420}
+        total={9001}
+        team={"Blue"}
+        players={["shoyu", "scallion", "nori"]}
+        spymaster={"chasu"}
+        />
     </div>
   </div>
 );
