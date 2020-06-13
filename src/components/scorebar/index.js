@@ -20,7 +20,7 @@ const Scorebar = ({ classValue, score, total, team, players, spymaster }) => (
     <p style={{color: colourForTeam(team)}}>{team}</p>
     <div>
       <p style={{color: colourForTeam(team)}}>Players</p>
-      {players.map(player => <p>{player}</p>)}
+      {players.map((player, idx) => <p key={idx}>{player}</p>)}
     </div>
     <p style={{color: colourForTeam(team)}}>Spymaster</p>
     <p>{spymaster}</p>
