@@ -13,7 +13,7 @@ const getTimeRemaining = (expiresAt, startedAt) => {
   const totalTime = (expiresAt - startedAt);
 
   return {
-    percentRemaining: parseInt((Date.now() - startedAt) * 100 / totalTime),
+    percentRemaining: (Date.now() - startedAt) * 100 / totalTime,
     total: remainingMilliseconds,
     minutes: parseInt(remainingMilliseconds / (60 * 1000)),
     seconds: parseInt(remainingMilliseconds / 1000)
@@ -64,7 +64,7 @@ class Timer extends React.Component {
 
   render() {
     return (
-      <div className={"timer-component"}>
+      <div className={`${this.props.classValue} timer-component`}>
         <i className={"icon ion-icon ion-android-stopwatch"} />
         <div className={"progress-bar-content"}>
           <div style={{textAlign: "left"}}>{formatTime(this.state.timeLeft)}</div>
