@@ -3,6 +3,7 @@ import './Card.css';
 
 const cardStyles = {
   border: "2px black solid",
+  borderRadius: "10px",
   cursor: "pointer"
 };
 
