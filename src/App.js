@@ -63,7 +63,7 @@ class App extends React.Component {
     }
 
     let newActiveTeam = activeTeam;
-    if (word.team !== activeTeam) {
+    if (word.team && word.team !== activeTeam) {
       newActiveTeam = activeTeam === RED_TEAM ? BLUE_TEAM : RED_TEAM;
     }
 
