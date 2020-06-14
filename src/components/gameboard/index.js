@@ -13,9 +13,10 @@ const Gameboard = ({
   words
 }) => (
   <div>
-    <h1>This is a Gameboard</h1>
+    <h1>C O D E N A M E S</h1>
     <div className="wrapper">
       <Scorebar
+        activeTeam={activeTeam}
         classValue={"left-sidebar"}
         score={redTeamScore}
         total={redTeamTotalCards}
@@ -40,6 +41,7 @@ const Gameboard = ({
       </div>
 
       <Scorebar
+        activeTeam={activeTeam}
         classValue={"right-sidebar"}
         score={blueTeamScore}
         total={blueTeamTotalCards}

@@ -54,13 +54,23 @@ class App extends React.Component {
   handleSelectWord = (word, activeTeam) => {
     if (word.isRevealed) return;
 
+    if (word.isDoubleAgent) {
+      window.alert(`${activeTeam} Loses!`);
+    }
+
     if (activeTeam !== word.team) {
       console.log("### You picked the other team's card!", activeTeam, word);
+    }
+
+    let newActiveTeam = activeTeam;
+    if (word.team !== activeTeam) {
+      newActiveTeam = activeTeam === RED_TEAM ? BLUE_TEAM : RED_TEAM;
     }
 
     this.setState(prevState => {
       let currState = {
         ...prevState,
+        activeTeam: newActiveTeam,
         words: prevState.words.map(v => {
           if (v.id === word.id) {
             return {
