@@ -1,4 +1,5 @@
 import React from 'react';
+import './Card.css';
 
 const cardStyles = {
   border: "2px black solid",
@@ -31,7 +32,7 @@ const prepareCardStyle = (word) => {
 const Card = ({ classValue, handleSelectWord, word }) => (
   <div
     onClick={(e) => e.preventDefault() || handleSelectWord()}
-    className={classValue}
+    className={`${classValue} card-hover`}
     style={prepareCardStyle(word)}
   >
     <p>{word.value}</p>
