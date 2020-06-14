@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from '../card';
 import Scorebar from '../scorebar';
+import Timer from '../timer';
 import './Gameboard.css'
 
 const colourForTeam = (team) => ({
@@ -24,6 +25,7 @@ const Gameboard = ({
   <div>
     <h1>C O D E N A M E S</h1>
     <h2 style={turnIndicatorStyle(activeTeam)}>{activeTeam}'s Turn</h2>
+    <Timer expiresAt={Date.now() + (2 * 60 * 1000)} />
     <div className="wrapper">
       <Scorebar
         activeTeam={activeTeam}
@@ -36,18 +38,18 @@ const Gameboard = ({
         />
 
       <div className="gameboard">
-      {[0, 1, 2, 3, 4].map(i =>
-        <div key={i} className="card-row">
-          {words.slice(0 + i * 5, 5 + i * 5).map(word =>
-            <Card
-              key={word.id}
-              word={word}
-              handleSelectWord={() => handleSelectWord(word, activeTeam)}
-              classValue={"card"}
-            />
-          )}
-        </div>
-      )}
+        {[0, 1, 2, 3, 4].map(i =>
+          <div key={i} className="card-row">
+            {words.slice(0 + i * 5, 5 + i * 5).map(word =>
+              <Card
+                key={word.id}
+                word={word}
+                handleSelectWord={() => handleSelectWord(word, activeTeam)}
+                classValue={"card"}
+              />
+            )}
+          </div>
+        )}
       </div>
 
       <Scorebar
