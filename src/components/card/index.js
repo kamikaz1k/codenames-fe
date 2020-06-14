@@ -8,7 +8,7 @@ const cardStyles = {
 const bgColourForTeam = (team) => ({
   red: "#CD3B49",
   blue: "#80C2FF",
-  default: "white"
+  default: "#FCECD7"
 }[team.toLowerCase()]);
 
 const addFontColourForTeam = (team) => (
@@ -21,13 +21,12 @@ const prepareCardStyle = (word) => {
     teamStyles.backgroundColor = bgColourForTeam(word.team || "default");
     Object.assign(teamStyles, addFontColourForTeam(word.team));
   }
-  console.log(teamStyles);
   return Object.assign({}, cardStyles, teamStyles);
 }
 
 const Card = ({ classValue, handleSelectWord, word }) => (
   <div
-    onClick={() => handleSelectWord(word)}
+    onClick={(e) => e.preventDefault() || handleSelectWord()}
     className={classValue}
     style={prepareCardStyle(word)}
   >

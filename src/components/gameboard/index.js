@@ -3,14 +3,22 @@ import Card from '../card';
 import Scorebar from '../scorebar';
 import './Gameboard.css'
 
-const Gameboard = ({ handleSelectWord, words }) => (
+const Gameboard = ({
+  activeTeam,
+  handleSelectWord,
+  redTeamScore,
+  redTeamTotalCards,
+  blueTeamScore,
+  blueTeamTotalCards,
+  words
+}) => (
   <div>
     <h1>This is a Gameboard</h1>
     <div className="wrapper">
       <Scorebar
         classValue={"left-sidebar"}
-        score={420}
-        total={9001}
+        score={redTeamScore}
+        total={redTeamTotalCards}
         team={"Red"}
         players={["shoyu", "scallion", "nori"]}
         spymaster={"chasu"}
@@ -23,7 +31,7 @@ const Gameboard = ({ handleSelectWord, words }) => (
             <Card
               key={word.id}
               word={word}
-              handleSelectWord={handleSelectWord}
+              handleSelectWord={() => handleSelectWord(word, activeTeam)}
               classValue={"card"}
             />
           )}
@@ -33,8 +41,8 @@ const Gameboard = ({ handleSelectWord, words }) => (
 
       <Scorebar
         classValue={"right-sidebar"}
-        score={420}
-        total={9001}
+        score={blueTeamScore}
+        total={blueTeamTotalCards}
         team={"Blue"}
         players={["shoyu", "scallion", "nori"]}
         spymaster={"chasu"}

@@ -9,10 +9,10 @@ const colourForTeam = (team) => ({
   blue: "#80C2FF"
 }[team.toLowerCase()]);
 
-const addStyles = (more) => Object.assign({}, scorebarStyles, more)
+const addStyles = (more = {}) => Object.assign({}, scorebarStyles, more)
 
 const Scorebar = ({ classValue, score, total, team, players, spymaster }) => (
-  <div className={classValue} style={addStyles({})}>
+  <div className={classValue} style={addStyles()}>
     <div style={{border: `2px solid ${colourForTeam(team)}`, borderRadius: "20px"}}>
       <p>Score</p>
       <p>{`${score} / ${total}`}</p>
