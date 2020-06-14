@@ -25,7 +25,7 @@ const Gameboard = ({
   <div>
     <h1>C O D E N A M E S</h1>
     <h2 style={turnIndicatorStyle(activeTeam)}>{activeTeam}'s Turn</h2>
-    <Timer expiresAt={Date.now() + (2 * 60 * 1000)} />
+    <Timer startedAt={Date.now()} expiresAt={Date.now() + (2 * 60 * 1000)} />
     <div className="wrapper">
       <Scorebar
         activeTeam={activeTeam}

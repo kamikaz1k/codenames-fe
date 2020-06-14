@@ -1,20 +1,32 @@
 import React from 'react'
+import './Timer.css';
 
-const getTimeRemaining = (expiresAt) => {
+const timeOut = {
+  percentRemaining:0,
+  total:0,
+  minutes:0,
+  seconds:0
+};
+
+const getTimeRemaining = (expiresAt, startedAt) => {
   const remainingMilliseconds = expiresAt - Date.now();
+  const totalTime = (expiresAt - startedAt);
+
   return {
+    percentRemaining: parseInt((Date.now() - startedAt) * 100 / totalTime),
     total: remainingMilliseconds,
     minutes: parseInt(remainingMilliseconds / (60 * 1000)),
     seconds: parseInt(remainingMilliseconds / 1000)
   };
 }
 
+const formatTime = ({ minutes, seconds }) => `${minutes}:${("0" + seconds % 60).slice(-2)}`;
+
 class Timer extends React.Component {
   constructor(props) {
     super(props)
-    // here, getTimeRemaining is a helper function that returns an
-    // object with { total, seconds, minutes, hours, days }
-    this.state = { timeLeft: getTimeRemaining(props.expiresAt) }
+
+    this.state = { timeLeft: getTimeRemaining(props.expiresAt, props.startedAt) }
   }
 
   // Wait until the component has mounted to start the animation frame
@@ -32,16 +44,16 @@ class Timer extends React.Component {
   }
 
   tick = () => {
-    // console.log("hi");
-    const timeLeft = getTimeRemaining(this.props.expiresAt)
+    const timeLeft = getTimeRemaining(this.props.expiresAt, this.props.startedAt);
+
     if (timeLeft.total <= 0) {
       this.stop()
-      this.setState({ timeLeft });
+      this.setState({ timeLeft: timeOut });
       // ...any other actions to do on expiration
     } else {
       this.setState(
         { timeLeft },
-        () => this.frameId = requestAnimationFrame(this.tick)
+        () => setTimeout(() => { this.frameId = requestAnimationFrame(this.tick) }, 1000 / 12)
       )
     }
   }
@@ -51,7 +63,18 @@ class Timer extends React.Component {
   }
 
   render() {
-    return <div>{this.state.timeLeft.minutes}:{this.state.timeLeft.seconds % 60} remaining...</div>;
+    return (
+      <div className={"timer-component"}>
+        <i className={"icon ion-icon ion-android-stopwatch"} />
+        <div className={"progress-bar-content"}>
+          <div style={{textAlign: "left"}}>{formatTime(this.state.timeLeft)}</div>
+          <div className={"progress-bar"}>
+            <div className={"background"}></div>
+            <div className={"completed"} style={{width: `${this.state.timeLeft.percentRemaining}%`}}></div>
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 
