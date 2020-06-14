@@ -3,6 +3,15 @@ import Card from '../card';
 import Scorebar from '../scorebar';
 import './Gameboard.css'
 
+const colourForTeam = (team) => ({
+  Red: "#CD3B49",
+  Blue: "#80C2FF"
+}[team]);
+
+const turnIndicatorStyle = (team) => ({
+  color: colourForTeam(team)
+})
+
 const Gameboard = ({
   activeTeam,
   handleSelectWord,
@@ -14,6 +23,7 @@ const Gameboard = ({
 }) => (
   <div>
     <h1>C O D E N A M E S</h1>
+    <h2 style={turnIndicatorStyle(activeTeam)}>{activeTeam}'s Turn</h2>
     <div className="wrapper">
       <Scorebar
         activeTeam={activeTeam}

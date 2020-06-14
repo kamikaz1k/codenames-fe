@@ -27,7 +27,7 @@ const Scorebar = ({
     </div>
 
     <p style={{color: colourForTeam(team)}}>
-      {team}{activeTeam === team ? " (active)" : ""}
+      {team}
     </p>
 
     <div>
