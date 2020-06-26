@@ -50,6 +50,9 @@ const words = [
 class App extends React.Component {
 
   state = {
+    userId: null,
+    roomId: null,
+    team: null,
     words: words,
     state: null,
     losingTeam: null,
@@ -68,6 +71,22 @@ class App extends React.Component {
 
     channel.on("new_msg", payload => {
       console.log(`[${Date()}] ${JSON.stringify(payload.body)}`);
+    });
+
+    channel.on("player_state_update", payload =>{
+      console.log(`[${Date()}] ${JSON.stringify(payload.body)}`);
+
+      const {
+        team,
+        room_id,
+        user_id
+      } = payload.body;
+
+      this.setState({
+        userId: user_id,
+        roomId: room_id,
+        team: team
+      })
     });
 
     channel.on("game_update", payload => {
@@ -117,6 +136,12 @@ class App extends React.Component {
 
   handleNewRoom = () => {
     this.state.channel.push("create_room");
+  }
+
+  handleJoinRoom = () => {
+    const roomId = window.prompt("Room ID please?");
+
+    this.state.channel.push("join_room", {room: roomId});
   }
 
   handleNewGame = () => {
@@ -177,11 +202,13 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <button onClick={() => this.handleNewRoom()}>New Room</button>
+        <button onClick={() => this.handleNewRoom()}>Sign Into Room</button>
+        <button onClick={() => this.handleJoinRoom()}>Join Room</button>
         <button onClick={() => this.handleNewGame()}>New Game</button>
         <button onClick={() => this.handleTeamSelection("red")}>I am red!</button>
         <button onClick={() => this.handleTeamSelection("blue")}>I am blue!</button>
         <button onClick={() => this.handleGameAction(2)}>Take action!</button>
+        <div>Player State: {JSON.stringify({ userId: this.state.userId, roomId: this.state.roomId, team: this.state.team })}</div>
         <div>Game State: {this.state.state}</div>
         {this.state.losingTeam && <div>{this.state.losingTeam} lost!</div>}
         <Gameboard
