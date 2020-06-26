@@ -5,8 +5,8 @@ import Timer from '../timer';
 import './Gameboard.css'
 
 const colourForTeam = (team) => ({
-  Red: "#CD3B49",
-  Blue: "#80C2FF"
+  red: "#CD3B49",
+  blue: "#80C2FF"
 }[team]);
 
 const turnIndicatorStyle = (team) => ({

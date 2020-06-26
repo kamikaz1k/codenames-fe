@@ -6,8 +6,8 @@ import phx from './lib/phoenix';
 
 import Gameboard from './components/gameboard';
 
-const RED_TEAM = "Red";
-const BLUE_TEAM = "Blue";
+const RED_TEAM = "red";
+const BLUE_TEAM = "blue";
 
 window.inspect = (obj) => {
   console.log(obj);
@@ -20,31 +20,31 @@ window.inspect = (obj) => {
 const Socket = phx.Socket;
 
 const words = [
-  { value: "__camp", id: 1, team: BLUE_TEAM, isDoubleAgent: false, isRevealed: false },
-  { value: "deer", id: 2, team: RED_TEAM, isDoubleAgent: false, isRevealed: false },
-  { value: "proposal", id: 3, team: null, isDoubleAgent: false, isRevealed: false },
-  { value: "walk", id: 4, team: BLUE_TEAM, isDoubleAgent: false, isRevealed: false },
-  { value: "dip", id: 5, team: null, isDoubleAgent: false, isRevealed: false },
-  { value: "screw", id: 6, team: BLUE_TEAM, isDoubleAgent: false, isRevealed: false },
-  { value: "denial", id: 7, team: RED_TEAM, isDoubleAgent: false, isRevealed: false },
-  { value: "rich", id: 8, team: null, isDoubleAgent: false, isRevealed: false },
-  { value: "know", id: 9, team: BLUE_TEAM, isDoubleAgent: false, isRevealed: false },
-  { value: "sheet", id: 10, team: BLUE_TEAM, isDoubleAgent: false, isRevealed: false },
-  { value: "lose", id: 11, team: null, isDoubleAgent: false, isRevealed: false },
-  { value: "charm", id: 12, team: RED_TEAM, isDoubleAgent: false, isRevealed: false },
-  { value: "pan", id: 13, team: BLUE_TEAM, isDoubleAgent: false, isRevealed: false },
-  { value: "researcher", id: 14, team: null, isDoubleAgent: true, isRevealed: false },
-  { value: "tight", id: 15, team: null, isDoubleAgent: false, isRevealed: false },
-  { value: "adoption", id: 16, team: RED_TEAM, isDoubleAgent: false, isRevealed: false },
-  { value: "volcano", id: 17, team: BLUE_TEAM, isDoubleAgent: false, isRevealed: false },
-  { value: "result", id: 18, team: BLUE_TEAM, isDoubleAgent: false, isRevealed: false },
-  { value: "crack", id: 19, team: null, isDoubleAgent: false, isRevealed: false },
-  { value: "lemon", id: 20, team: RED_TEAM, isDoubleAgent: false, isRevealed: false },
-  { value: "domestic", id: 21, team: null, isDoubleAgent: false, isRevealed: false },
-  { value: "aware", id: 22, team: null, isDoubleAgent: false, isRevealed: false },
-  { value: "garbage", id: 23, team: RED_TEAM, isDoubleAgent: false, isRevealed: false },
-  { value: "lover", id: 24, team: RED_TEAM, isDoubleAgent: false, isRevealed: false },
-  { value: "organize", id: 25, team: null, isDoubleAgent: false, isRevealed: false }
+  // { value: "__camp", id: 1, team: BLUE_TEAM, isDoubleAgent: false, isRevealed: false },
+  // { value: "deer", id: 2, team: RED_TEAM, isDoubleAgent: false, isRevealed: false },
+  // { value: "proposal", id: 3, team: null, isDoubleAgent: false, isRevealed: false },
+  // { value: "walk", id: 4, team: BLUE_TEAM, isDoubleAgent: false, isRevealed: false },
+  // { value: "dip", id: 5, team: null, isDoubleAgent: false, isRevealed: false },
+  // { value: "screw", id: 6, team: BLUE_TEAM, isDoubleAgent: false, isRevealed: false },
+  // { value: "denial", id: 7, team: RED_TEAM, isDoubleAgent: false, isRevealed: false },
+  // { value: "rich", id: 8, team: null, isDoubleAgent: false, isRevealed: false },
+  // { value: "know", id: 9, team: BLUE_TEAM, isDoubleAgent: false, isRevealed: false },
+  // { value: "sheet", id: 10, team: BLUE_TEAM, isDoubleAgent: false, isRevealed: false },
+  // { value: "lose", id: 11, team: null, isDoubleAgent: false, isRevealed: false },
+  // { value: "charm", id: 12, team: RED_TEAM, isDoubleAgent: false, isRevealed: false },
+  // { value: "pan", id: 13, team: BLUE_TEAM, isDoubleAgent: false, isRevealed: false },
+  // { value: "researcher", id: 14, team: null, isDoubleAgent: true, isRevealed: false },
+  // { value: "tight", id: 15, team: null, isDoubleAgent: false, isRevealed: false },
+  // { value: "adoption", id: 16, team: RED_TEAM, isDoubleAgent: false, isRevealed: false },
+  // { value: "volcano", id: 17, team: BLUE_TEAM, isDoubleAgent: false, isRevealed: false },
+  // { value: "result", id: 18, team: BLUE_TEAM, isDoubleAgent: false, isRevealed: false },
+  // { value: "crack", id: 19, team: null, isDoubleAgent: false, isRevealed: false },
+  // { value: "lemon", id: 20, team: RED_TEAM, isDoubleAgent: false, isRevealed: false },
+  // { value: "domestic", id: 21, team: null, isDoubleAgent: false, isRevealed: false },
+  // { value: "aware", id: 22, team: null, isDoubleAgent: false, isRevealed: false },
+  // { value: "garbage", id: 23, team: RED_TEAM, isDoubleAgent: false, isRevealed: false },
+  // { value: "lover", id: 24, team: RED_TEAM, isDoubleAgent: false, isRevealed: false },
+  // { value: "organize", id: 25, team: null, isDoubleAgent: false, isRevealed: false }
 ];
 
 class App extends React.Component {
@@ -68,12 +68,21 @@ class App extends React.Component {
       console.log(`[${Date()}] ${JSON.stringify(payload.body)}`);
     });
 
-    channel.on("create_game", payload => {
-      console.log(`[${Date()}] ${JSON.stringify(payload.body)}`);
+    channel.on("game_update", payload => {
+      // console.log(`[${Date()}] ${JSON.stringify(payload.body)}`);
+      console.log(`[${Date()}] GAME UPDATE`);
+
+      const { active_team, words } = payload.body;
+      const redTeamScore = words.reduce((acc, curr) => (curr.isRevealed && curr.team === RED_TEAM) ? acc + 1 : acc, 0);
+      const blueTeamScore = words.reduce((acc, curr) => (curr.isRevealed && curr.team === BLUE_TEAM) ? acc + 1 : acc, 0);
+
       this.setState({
-        words: payload.body.words,
+        words: words,
+        activeTeam: active_team,
         redTeamTotalCards: words.reduce((acc, curr) => curr.team === RED_TEAM ? acc + 1 : acc, 0),
-        blueTeamTotalCards: words.reduce((acc, curr) => curr.team === BLUE_TEAM ? acc + 1 : acc, 0)
+        blueTeamTotalCards: words.reduce((acc, curr) => curr.team === BLUE_TEAM ? acc + 1 : acc, 0),
+        redTeamScore,
+        blueTeamScore
       });
     });
 
@@ -91,7 +100,7 @@ class App extends React.Component {
 
   }
 
-  handleClick = () => {
+  _handleClick = () => {
     this.state.channel.push("new_msg", { body: "I was clicked!" });
   }
 
@@ -107,59 +116,61 @@ class App extends React.Component {
     this.state.channel.push("pick_team", { team });
   }
 
-  handleGameAction = () => {
-    this.state.channel.push("game_action");
+  handleGameAction = (cardId) => {
+    this.state.channel.push("game_action", {action: "select", id: cardId});
   }
 
   handleSelectWord = (word, activeTeam) => {
+
     if (word.isRevealed) return;
 
-    if (word.isDoubleAgent) {
-      window.alert(`${activeTeam} Loses!`);
-    }
+    return this.handleGameAction(word.id);
 
-    if (activeTeam !== word.team) {
-      console.log("### You picked the other team's card!", activeTeam, word);
-    }
+    // if (word.isDoubleAgent) {
+    //   window.alert(`${activeTeam} Loses!`);
+    // }
 
-    let newActiveTeam = activeTeam;
-    if (word.team && word.team !== activeTeam) {
-      newActiveTeam = activeTeam === RED_TEAM ? BLUE_TEAM : RED_TEAM;
-    }
+    // if (activeTeam !== word.team) {
+    //   console.log("### You picked the other team's card!", activeTeam, word);
+    // }
 
-    this.setState(prevState => {
-      let currState = {
-        ...prevState,
-        activeTeam: newActiveTeam,
-        words: prevState.words.map(v => {
-          if (v.id === word.id) {
-            return {
-              ...word,
-              isRevealed: true
-            }
-          }
+    // let newActiveTeam = activeTeam;
+    // if (word.team && word.team !== activeTeam) {
+    //   newActiveTeam = activeTeam === RED_TEAM ? BLUE_TEAM : RED_TEAM;
+    // }
 
-          return v;
-        })
-      };
+    // this.setState(prevState => {
+    //   let currState = {
+    //     ...prevState,
+    //     activeTeam: newActiveTeam,
+    //     words: prevState.words.map(v => {
+    //       if (v.id === word.id) {
+    //         return {
+    //           ...word,
+    //           isRevealed: true
+    //         }
+    //       }
 
-      return window.inspect({
-        ...currState,
-        redTeamScore: currState.words.reduce((acc, curr) => (curr.isRevealed && curr.team === RED_TEAM) ? acc + 1 : acc, 0),
-        blueTeamScore: currState.words.reduce((acc, curr) => (curr.isRevealed && curr.team === BLUE_TEAM) ? acc + 1 : acc, 0)
-      });
-    });
+    //       return v;
+    //     })
+    //   };
+
+    //   return window.inspect({
+    //     ...currState,
+    //     redTeamScore: currState.words.reduce((acc, curr) => (curr.isRevealed && curr.team === RED_TEAM) ? acc + 1 : acc, 0),
+    //     blueTeamScore: currState.words.reduce((acc, curr) => (curr.isRevealed && curr.team === BLUE_TEAM) ? acc + 1 : acc, 0)
+    //   });
+    // });
   }
 
   render() {
     return (
       <div className="App">
-        <button onClick={() => this.handleClick()}>Click me</button>
         <button onClick={() => this.handleNewRoom()}>New Room</button>
         <button onClick={() => this.handleNewGame()}>New Game</button>
         <button onClick={() => this.handleTeamSelection("red")}>I am red!</button>
         <button onClick={() => this.handleTeamSelection("blue")}>I am blue!</button>
-        <button onClick={() => this.handleGameAction()}>Take action!</button>
+        <button onClick={() => this.handleGameAction(2)}>Take action!</button>
         <Gameboard
           activeTeam={this.state.activeTeam}
           redTeamScore={this.state.redTeamScore}

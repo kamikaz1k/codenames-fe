@@ -8,8 +8,8 @@ const cardStyles = {
 };
 
 const bgColourForTeam = (team) => ({
-  Red: "#CD3B49",
-  Blue: "#80C2FF",
+  red: "#CD3B49",
+  blue: "#80C2FF",
   null: "#FCECD7",
   doubleAgent: "black"
 }[team]);
