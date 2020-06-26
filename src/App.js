@@ -2,6 +2,8 @@ import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
 
+import phx from './lib/phoenix';
+
 import Gameboard from './components/gameboard';
 
 const RED_TEAM = "Red";
@@ -12,8 +14,13 @@ window.inspect = (obj) => {
   return obj;
 }
 
+// window.phx = phx;
+// window.Socket = phx.Socket;
+
+const Socket = phx.Socket;
+
 const words = [
-  { value: "camp", id: 1, team: BLUE_TEAM, isDoubleAgent: false, isRevealed: false },
+  { value: "__camp", id: 1, team: BLUE_TEAM, isDoubleAgent: false, isRevealed: false },
   { value: "deer", id: 2, team: RED_TEAM, isDoubleAgent: false, isRevealed: false },
   { value: "proposal", id: 3, team: null, isDoubleAgent: false, isRevealed: false },
   { value: "walk", id: 4, team: BLUE_TEAM, isDoubleAgent: false, isRevealed: false },
@@ -50,6 +57,59 @@ class App extends React.Component {
     blueTeamScore: 0,
     blueTeamTotalCards: words.reduce((acc, curr) => curr.team === BLUE_TEAM ? acc + 1 : acc, 0)
   };
+
+  componentDidMount() {
+    const socket = new Socket("//localhost:4000/socket", {params: {userToken: "123"}});
+    socket.connect();
+
+    const channel = socket.channel("room:lobby");
+
+    channel.on("new_msg", payload => {
+      console.log(`[${Date()}] ${JSON.stringify(payload.body)}`);
+    });
+
+    channel.on("create_game", payload => {
+      console.log(`[${Date()}] ${JSON.stringify(payload.body)}`);
+      this.setState({
+        words: payload.body.words,
+        redTeamTotalCards: words.reduce((acc, curr) => curr.team === RED_TEAM ? acc + 1 : acc, 0),
+        blueTeamTotalCards: words.reduce((acc, curr) => curr.team === BLUE_TEAM ? acc + 1 : acc, 0)
+      });
+    });
+
+    channel.join()
+      .receive("ok", ({messages}) => console.log("catching up", messages) )
+      .receive("error", ({reason}) => console.log("failed join", reason) )
+      .receive("timeout", () => console.log("Networking issue. Still waiting..."));
+
+    this.setState({
+      channel, socket
+    });
+
+    window.channel = channel;
+    window.socket = socket;
+
+  }
+
+  handleClick = () => {
+    this.state.channel.push("new_msg", { body: "I was clicked!" });
+  }
+
+  handleNewRoom = () => {
+    this.state.channel.push("create_room");
+  }
+
+  handleNewGame = () => {
+    this.state.channel.push("create_game");
+  }
+
+  handleTeamSelection = (team) => {
+    this.state.channel.push("pick_team", { team });
+  }
+
+  handleGameAction = () => {
+    this.state.channel.push("game_action");
+  }
 
   handleSelectWord = (word, activeTeam) => {
     if (word.isRevealed) return;
@@ -94,6 +154,12 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <button onClick={() => this.handleClick()}>Click me</button>
+        <button onClick={() => this.handleNewRoom()}>New Room</button>
+        <button onClick={() => this.handleNewGame()}>New Game</button>
+        <button onClick={() => this.handleTeamSelection("red")}>I am red!</button>
+        <button onClick={() => this.handleTeamSelection("blue")}>I am blue!</button>
+        <button onClick={() => this.handleGameAction()}>Take action!</button>
         <Gameboard
           activeTeam={this.state.activeTeam}
           redTeamScore={this.state.redTeamScore}
