@@ -51,6 +51,8 @@ class App extends React.Component {
 
   state = {
     words: words,
+    state: null,
+    losingTeam: null,
     activeTeam: RED_TEAM,
     redTeamScore: 0,
     redTeamTotalCards: words.reduce((acc, curr) => curr.team === RED_TEAM ? acc + 1 : acc, 0),
@@ -72,17 +74,26 @@ class App extends React.Component {
       // console.log(`[${Date()}] ${JSON.stringify(payload.body)}`);
       console.log(`[${Date()}] GAME UPDATE`);
 
-      const { active_team, words } = payload.body;
-      const redTeamScore = words.reduce((acc, curr) => (curr.isRevealed && curr.team === RED_TEAM) ? acc + 1 : acc, 0);
-      const blueTeamScore = words.reduce((acc, curr) => (curr.isRevealed && curr.team === BLUE_TEAM) ? acc + 1 : acc, 0);
+      const {
+        active_team,
+        words,
+        state,
+        losing_team,
+        blue_total,
+        red_total,
+        blue_score,
+        red_score,
+      } = payload.body;
 
       this.setState({
         words: words,
         activeTeam: active_team,
-        redTeamTotalCards: words.reduce((acc, curr) => curr.team === RED_TEAM ? acc + 1 : acc, 0),
-        blueTeamTotalCards: words.reduce((acc, curr) => curr.team === BLUE_TEAM ? acc + 1 : acc, 0),
-        redTeamScore,
-        blueTeamScore
+        redTeamTotalCards: red_total,
+        blueTeamTotalCards: blue_total,
+        redTeamScore: red_score,
+        blueTeamScore: blue_score,
+        losingTeam: losing_team,
+        state
       });
     });
 
@@ -171,6 +182,8 @@ class App extends React.Component {
         <button onClick={() => this.handleTeamSelection("red")}>I am red!</button>
         <button onClick={() => this.handleTeamSelection("blue")}>I am blue!</button>
         <button onClick={() => this.handleGameAction(2)}>Take action!</button>
+        <div>Game State: {this.state.state}</div>
+        {this.state.losingTeam && <div>{this.state.losingTeam} lost!</div>}
         <Gameboard
           activeTeam={this.state.activeTeam}
           redTeamScore={this.state.redTeamScore}
