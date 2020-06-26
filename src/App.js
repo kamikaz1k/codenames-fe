@@ -63,6 +63,23 @@ class App extends React.Component {
     blueTeamTotalCards: words.reduce((acc, curr) => curr.team === BLUE_TEAM ? acc + 1 : acc, 0)
   };
 
+  toast = (msg) => {
+    this.setState({ msg: msg });
+
+    setTimeout(() => {
+      this.setState(prevState => {
+        if (prevState.msg == msg) {
+          return {
+            ...prevState,
+            msg: null
+          }
+        }
+
+        return msg;
+      });
+    }, 2000);
+  }
+
   componentDidMount() {
     const socket = new Socket("//localhost:4000/socket", {params: {userToken: "123"}});
     socket.connect();
@@ -71,6 +88,15 @@ class App extends React.Component {
 
     channel.on("new_msg", payload => {
       console.log(`[${Date()}] ${JSON.stringify(payload.body)}`);
+    });
+
+    channel.on("player_message", payload => {
+      if (payload.error) {
+        console.error(`[${Date()}] ${payload.error}`);
+        this.toast(payload.error);
+      } else {
+        console.log(`[${Date()}] ${JSON.stringify(payload)}`);
+      }
     });
 
     channel.on("player_state_update", payload =>{
@@ -141,7 +167,7 @@ class App extends React.Component {
   handleJoinRoom = () => {
     const roomId = window.prompt("Room ID please?");
 
-    this.state.channel.push("join_room", {room: roomId});
+    this.state.channel.push("join_room", {room: parseInt(roomId)});
   }
 
   handleNewGame = () => {
@@ -211,6 +237,7 @@ class App extends React.Component {
         <div>Player State: {JSON.stringify({ userId: this.state.userId, roomId: this.state.roomId, team: this.state.team })}</div>
         <div>Game State: {this.state.state}</div>
         {this.state.losingTeam && <div>{this.state.losingTeam} lost!</div>}
+        {this.state.msg && <div>Error: {this.state.msg}</div>}
         <Gameboard
           activeTeam={this.state.activeTeam}
           redTeamScore={this.state.redTeamScore}

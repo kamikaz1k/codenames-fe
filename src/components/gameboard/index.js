@@ -9,6 +9,11 @@ const colourForTeam = (team) => ({
   blue: "#80C2FF"
 }[team]);
 
+const prettyTeamName = {
+  red: "Red",
+  blue: "Blue"
+};
+
 const turnIndicatorStyle = (team) => ({
   color: colourForTeam(team)
 })
@@ -24,7 +29,7 @@ const Gameboard = ({
 }) => (
   <div>
     <h1>C O D E N A M E S</h1>
-    <h2 style={turnIndicatorStyle(activeTeam)}>{activeTeam}'s Turn</h2>
+    <h2 style={turnIndicatorStyle(activeTeam)}>{prettyTeamName[activeTeam]}'s Turn</h2>
     <div className={"timer-wrapper"}>
       <Timer classValue={"timer-container"} startedAt={Date.now()} expiresAt={Date.now() + (2 * 60 * 1000)} />
     </div>
