@@ -39,7 +39,7 @@ const Gameboard = ({
         classValue={"left-sidebar"}
         score={redTeamScore}
         total={redTeamTotalCards}
-        team={"Red"}
+        team={"red"}
         players={["shoyu", "scallion", "nori"]}
         spymaster={"chasu"}
         />
@@ -64,7 +64,7 @@ const Gameboard = ({
         classValue={"right-sidebar"}
         score={blueTeamScore}
         total={blueTeamTotalCards}
-        team={"Blue"}
+        team={"blue"}
         players={["shoyu", "scallion", "nori"]}
         spymaster={"chasu"}
         />
