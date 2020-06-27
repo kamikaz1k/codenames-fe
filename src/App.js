@@ -5,10 +5,10 @@ import './App.css';
 import { Socket } from 'phoenix';
 
 import Gameboard from './components/gameboard';
+import dummyData from './lib/dummy';
 
 const RED_TEAM = "red";
 const BLUE_TEAM = "blue";
-const words = [];
 
 window.inspect = (obj) => {
   console.log(obj);
@@ -18,19 +18,19 @@ window.inspect = (obj) => {
 
 class App extends React.Component {
 
-  state = {
+  state = Object.assign({
     userId: null,
     roomId: null,
     team: null,
-    words: words,
+    words: [],
     state: null,
     losingTeam: null,
     activeTeam: RED_TEAM,
     redTeamScore: 0,
-    redTeamTotalCards: words.reduce((acc, curr) => curr.team === RED_TEAM ? acc + 1 : acc, 0),
+    redTeamTotalCards: 0,
     blueTeamScore: 0,
-    blueTeamTotalCards: words.reduce((acc, curr) => curr.team === BLUE_TEAM ? acc + 1 : acc, 0)
-  };
+    blueTeamTotalCards: 0
+  }, dummyData)
 
   toast = (msg) => {
     this.setState({ msg: msg });
