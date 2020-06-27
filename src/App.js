@@ -1,14 +1,17 @@
 import React from 'react';
-// import logo from './logo.svg';
-import './App.css';
-
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 import { Socket } from 'phoenix';
 
-import Gameboard from './components/gameboard';
-import dummyData from './lib/dummy';
+// import logo from './logo.svg';
+import './App.css';
+import GamePage from './views/game';
 
-const RED_TEAM = "red";
-const BLUE_TEAM = "blue";
+import dummyData from './lib/dummy';
 
 window.inspect = (obj) => {
   console.log(obj);
@@ -25,7 +28,7 @@ class App extends React.Component {
     words: [],
     state: null,
     losingTeam: null,
-    activeTeam: RED_TEAM,
+    activeTeam: "red",
     redTeamScore: 0,
     redTeamTotalCards: 0,
     blueTeamScore: 0,
@@ -157,26 +160,30 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <button onClick={() => this.handleNewRoom()}>Sign Into Room</button>
-        <button onClick={() => this.handleJoinRoom()}>Join Room</button>
-        <button onClick={() => this.handleNewGame()}>New Game</button>
-        <button onClick={() => this.handleTeamSelection("red")}>I am red!</button>
-        <button onClick={() => this.handleTeamSelection("blue")}>I am blue!</button>
-        <button onClick={() => this.handleGameAction(2)}>Take action!</button>
-        <div>Player State: {JSON.stringify({ userId: this.state.userId, roomId: this.state.roomId, team: this.state.team })}</div>
-        <div>Game State: {this.state.state}</div>
-        {this.state.losingTeam && <div>{this.state.losingTeam} lost!</div>}
-        {this.state.msg && <div>Error: {this.state.msg}</div>}
-        <Gameboard
-          activeTeam={this.state.activeTeam}
-          redTeamScore={this.state.redTeamScore}
-          redTeamTotalCards={this.state.redTeamTotalCards}
-          blueTeamScore={this.state.blueTeamScore}
-          blueTeamTotalCards={this.state.blueTeamTotalCards}
-          handleSelectWord={this.handleSelectWord}
-          words={this.state.words} />
-      </div>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <div>Lobby</div>
+            <Link to="/game">Game</Link>
+          </Route>
+
+          <Route path="/game">
+            <GamePage
+              state={this.state}
+              handleNewRoom={this.handleNewRoom}
+              handleJoinRoom={this.handleJoinRoom}
+              handleNewGame={this.handleNewGame}
+              handleTeamSelection={this.handleTeamSelection}
+              handleGameAction={this.handleGameAction}
+              handleSelectWord={this.handleSelectWord}
+            />
+          </Route>
+
+          <Route>
+            <div>dont come here</div>
+          </Route>
+        </Switch>
+      </Router>
     );
   }
 }
