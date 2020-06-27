@@ -39,7 +39,7 @@ const CreateRoomPage = ({
         <button
           type="button"
           className={`btn btn-secondary ${componentRoomName ? '' : 'disabled'}`}
-          onClick={() => handleCreateRoom(componentRoomName)}>
+          onClick={() => componentRoomName && handleCreateRoom(componentRoomName)}>
           Create a Room
         </button>
       </form>

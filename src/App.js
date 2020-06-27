@@ -2,6 +2,7 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
+  Redirect,
   Route,
   Link
 } from "react-router-dom";
@@ -12,6 +13,7 @@ import './App.css';
 import GamePage from './pages/game';
 import CreateRoomPage from './pages/create-room';
 import ShareRoomPage from './pages/ShareRoomPage';
+import JoinRoomPage from './pages/JoinRoomPage';
 
 import dummyData from './lib/dummy';
 
@@ -139,10 +141,12 @@ class App extends React.Component {
     this.state.channel.push("create_room");
   }
 
-  handleJoinRoom = () => {
-    const roomId = window.prompt("Room ID please?");
+  handleJoinRoom = (roomId) => {
+    const roomName = "testing room name";
+    this.setState({ roomId, roomName });
+    // roomId = roomId || window.prompt("Room ID please?");
 
-    this.state.channel.push("join_room", {room: parseInt(roomId)});
+    // this.state.channel.push("join_room", {room: parseInt(roomId)});
   }
 
   handleNewGame = () => {
@@ -169,7 +173,6 @@ class App extends React.Component {
     console.log("handleCreateRoom", roomName);
     setTimeout(() => {
       const roomId = "RANDOM";
-      const redirect = "/share-room";
       console.log("mocking async room creation", roomId);
       this.setState({ roomId });
     }, 1000);
@@ -203,6 +206,21 @@ class App extends React.Component {
             <ShareRoomPage
               roomId={this.state.roomId}
               roomName={this.state.roomName} />
+          </Route>
+
+          <Route path="/join-room">
+            {this.state.roomId
+              ? <Redirect to="/setup-player" />
+              : <JoinRoomPage
+                  userId={this.state.userId}
+                  username={this.state.username}
+                  roomId={this.state.roomId}
+                  roomName={this.state.roomName}
+                  handleJoinRoom={this.handleJoinRoom} />}
+          </Route>
+
+          <Route path="/setup-player">
+            <div>set up player</div>
           </Route>
 
           <Route path="/game">
