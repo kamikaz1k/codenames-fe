@@ -33,7 +33,7 @@ const prepareCardStyle = (word) => {
 const Card = ({ classValue, handleSelectWord, word }) => (
   <div
     onClick={(e) => e.preventDefault() || handleSelectWord()}
-    className={`${classValue} card-hover`}
+    className={`${classValue} game-card card-hover`}
     style={prepareCardStyle(word)}
   >
     <p>{word.value}</p>

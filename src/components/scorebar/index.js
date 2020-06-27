@@ -19,6 +19,7 @@ const addComponentStyles = (more) => Object.assign({}, scorebarStyles, more || {
 const addScoreBoxStyles = ({ activeTeam, team }) => ({
   border: `2px solid ${colourForTeam(team)}`,
   borderRadius: "20px",
+  height: "138px",
   color: activeTeam === team && "white",
   background: activeTeam === team && colourForTeam(team),
   fontWeight: activeTeam === team && "bold"
