@@ -10,7 +10,7 @@ import { Socket } from 'phoenix';
 // import logo from './logo.svg';
 import './App.css';
 import GamePage from './pages/game';
-// import LobbyPage from './pages/lobby';
+import CreateRoomPage from './pages/create-room';
 
 import dummyData from './lib/dummy';
 
@@ -25,6 +25,7 @@ class App extends React.Component {
   state = Object.assign({
     userId: null,
     roomId: null,
+    roomname: "",
     team: null,
     words: [],
     state: null,
@@ -164,6 +165,10 @@ class App extends React.Component {
     console.log("handleUsernameChange", e);
   }
 
+  handleCreateRoom = (e) => {
+   console.log("handleCreateRoom", e);
+  }
+
   render() {
     return (
       <Router>
@@ -172,13 +177,19 @@ class App extends React.Component {
             <div className="container center">
               <h1>C O D E N A M E S</h1>
               <Link to="/create-room">
-                <button className="pure-button">Create a Room</button>
+                <button className="btn btn-secondary">Create a Room</button>
               </Link>
-              <span style={{padding: 10}}></span>
+              <span style={{padding: 5}}></span>
               <Link to="/game">
-                <button className="pure-button">Enter a Room</button>
+                <button className="btn btn-secondary">Enter a Room</button>
               </Link>
             </div>
+          </Route>
+
+          <Route path="/create-room">
+            <CreateRoomPage
+              username={this.state.roomname}
+              handleCreateRoom={this.handleCreateRoom} />
           </Route>
 
           <Route path="/game">
@@ -195,6 +206,8 @@ class App extends React.Component {
 
           <Route>
             <div>dont come here</div>
+            <Link to="/create-room">create-room</Link>
+            <Link to="/game">game</Link>
           </Route>
         </Switch>
       </Router>
