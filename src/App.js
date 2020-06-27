@@ -9,7 +9,8 @@ import { Socket } from 'phoenix';
 
 // import logo from './logo.svg';
 import './App.css';
-import GamePage from './views/game';
+import GamePage from './pages/game';
+// import LobbyPage from './pages/lobby';
 
 import dummyData from './lib/dummy';
 
@@ -32,7 +33,8 @@ class App extends React.Component {
     redTeamScore: 0,
     redTeamTotalCards: 0,
     blueTeamScore: 0,
-    blueTeamTotalCards: 0
+    blueTeamTotalCards: 0,
+    username: ""
   }, dummyData)
 
   toast = (msg) => {
@@ -158,13 +160,25 @@ class App extends React.Component {
     word.isRevealed || this.handleGameAction(word.id);
   }
 
+  handleUsernameChange = (e) => {
+    console.log("handleUsernameChange", e);
+  }
+
   render() {
     return (
       <Router>
         <Switch>
           <Route exact path="/">
-            <div>Lobby</div>
-            <Link to="/game">Game</Link>
+            <div className="container center">
+              <h1>C O D E N A M E S</h1>
+              <Link to="/create-room">
+                <button className="pure-button">Create a Room</button>
+              </Link>
+              <span style={{padding: 10}}></span>
+              <Link to="/game">
+                <button className="pure-button">Enter a Room</button>
+              </Link>
+            </div>
           </Route>
 
           <Route path="/game">
