@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
+import {
+  Redirect
+} from "react-router-dom";
 
 const CreateRoomPage = ({
-  roomname,
+  roomId,
+  roomName,
   handleCreateRoom
 }) => {
-  const [componentRoomname, setRoomname] = useState(roomname);
+  const [componentRoomName, setRoomname] = useState(roomName);
   return (
-    <div className="create-room-page container-sm" style={{maxWidth: 400}}>
-      <h1 className="center">C O D E N A M E S</h1>
+    roomId
+    ? <Redirect to="share-room" />
+    : <div className="create-room-page container container-slim">
+      <h1 className="center mb-5">C O D E N A M E S</h1>
 
       <form>
         <div className="form-group">
@@ -19,7 +25,7 @@ const CreateRoomPage = ({
               id="roomname"
               aria-describedby="roomnameHelp"
               placeholder="zeekybookydook"
-              value={roomname}
+              value={componentRoomName}
               onChange={(e) => setRoomname(e.target.value)}
             />
 
@@ -32,8 +38,8 @@ const CreateRoomPage = ({
 
         <button
           type="button"
-          className={`btn btn-secondary ${componentRoomname ? '' : 'disabled'}`}
-          onClick={() => handleCreateRoom(componentRoomname)}>
+          className={`btn btn-secondary ${componentRoomName ? '' : 'disabled'}`}
+          onClick={() => handleCreateRoom(componentRoomName)}>
           Create a Room
         </button>
       </form>

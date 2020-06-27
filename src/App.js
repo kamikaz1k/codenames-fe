@@ -11,6 +11,7 @@ import { Socket } from 'phoenix';
 import './App.css';
 import GamePage from './pages/game';
 import CreateRoomPage from './pages/create-room';
+import ShareRoomPage from './pages/ShareRoomPage';
 
 import dummyData from './lib/dummy';
 
@@ -19,13 +20,12 @@ window.inspect = (obj) => {
   return obj;
 }
 
-
 class App extends React.Component {
 
   state = Object.assign({
     userId: null,
     roomId: null,
-    roomname: "",
+    roomName: "",
     team: null,
     words: [],
     state: null,
@@ -165,8 +165,14 @@ class App extends React.Component {
     console.log("handleUsernameChange", e);
   }
 
-  handleCreateRoom = (e) => {
-   console.log("handleCreateRoom", e);
+  handleCreateRoom = (roomName) => {
+    console.log("handleCreateRoom", roomName);
+    setTimeout(() => {
+      const roomId = "RANDOM";
+      const redirect = "/share-room";
+      console.log("mocking async room creation", roomId);
+      this.setState({ roomId });
+    }, 1000);
   }
 
   render() {
@@ -188,8 +194,15 @@ class App extends React.Component {
 
           <Route path="/create-room">
             <CreateRoomPage
-              username={this.state.roomname}
+              roomId={this.state.roomId}
+              roomName={this.state.roomName}
               handleCreateRoom={this.handleCreateRoom} />
+          </Route>
+
+          <Route path="/share-room">
+            <ShareRoomPage
+              roomId={this.state.roomId}
+              roomName={this.state.roomName} />
           </Route>
 
           <Route path="/game">
