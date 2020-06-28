@@ -17,6 +17,7 @@ import JoinRoomPage from './pages/JoinRoomPage';
 import SetupPlayerPage from './pages/SetupPlayerPage';
 
 import dummyData from './lib/dummy';
+import packageJson from '../package.json';
 
 window.inspect = (obj) => {
   console.log(obj);
@@ -24,6 +25,7 @@ window.inspect = (obj) => {
 }
 
 const MOCK_BACKEND = true;
+const BASENAME = packageJson.homepage;
 const RED_TEAM = "red";
 const BLUE_TEAM = "blue";
 
@@ -233,7 +235,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router>
+      <Router basename={BASENAME}>
         <Switch>
           <Route exact path="/">
             <div className="container center">
@@ -299,8 +301,11 @@ class App extends React.Component {
 
           <Route>
             <div>dont come here</div>
-            <Link to="/create-room">create-room</Link>
-            <Link to="/game">game</Link>
+            <ul>
+              <li><Link to="/">Landing</Link></li>
+              <li><Link to="/create-room">create-room</Link></li>
+              <li><Link to="/game">game</Link></li>
+            </ul>
           </Route>
         </Switch>
       </Router>
