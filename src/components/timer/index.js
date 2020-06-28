@@ -68,8 +68,8 @@ class Timer extends React.Component {
         <i className={"icon ion-icon ion-android-stopwatch"} />
         <div className={"progress-bar-content"}>
           <div style={{textAlign: "left"}}>{formatTime(this.state.timeLeft)}</div>
-            <div class="progress">
-              <div class="progress-bar" role="progressbar" style={{width: `${this.state.timeLeft.percentRemaining}%`}} ariaValuenow={this.state.timeLeft.percentRemaining} ariaValuemin="0" ariaValuemax="100"></div>
+            <div className="progress">
+              <div className="progress-bar" role="progressbar" style={{width: `${this.state.timeLeft.percentRemaining}%`}} aria-valuenow={this.state.timeLeft.percentRemaining} aria-valuemin="0" aria-valuemax="100"></div>
             </div>
         </div>
       </div>
