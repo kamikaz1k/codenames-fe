@@ -14,6 +14,7 @@ import GamePage from './pages/game';
 import CreateRoomPage from './pages/create-room';
 import ShareRoomPage from './pages/ShareRoomPage';
 import JoinRoomPage from './pages/JoinRoomPage';
+import SetupPlayerPage from './pages/SetupPlayerPage';
 
 import dummyData from './lib/dummy';
 
@@ -22,13 +23,17 @@ window.inspect = (obj) => {
   return obj;
 }
 
+const MOCK_BACKEND = true;
+
 class App extends React.Component {
 
   state = Object.assign({
     userId: null,
-    roomId: null,
+    username: "",
+    roomId: 123,
     roomName: "",
     team: null,
+    role: null,
     words: [],
     state: null,
     losingTeam: null,
@@ -36,8 +41,7 @@ class App extends React.Component {
     redTeamScore: 0,
     redTeamTotalCards: 0,
     blueTeamScore: 0,
-    blueTeamTotalCards: 0,
-    username: ""
+    blueTeamTotalCards: 0
   }, dummyData)
 
   toast = (msg) => {
@@ -143,10 +147,11 @@ class App extends React.Component {
 
   handleJoinRoom = (roomId) => {
     const roomName = "testing room name";
-    this.setState({ roomId, roomName });
-    // roomId = roomId || window.prompt("Room ID please?");
 
-    // this.state.channel.push("join_room", {room: parseInt(roomId)});
+    if (MOCK_BACKEND) return this.setState({ roomId, roomName });
+
+    roomId = roomId || window.prompt("Room ID please?");
+    this.state.channel.push("join_room", {room: parseInt(roomId)});
   }
 
   handleNewGame = () => {
@@ -165,8 +170,10 @@ class App extends React.Component {
     word.isRevealed || this.handleGameAction(word.id);
   }
 
-  handleUsernameChange = (e) => {
-    console.log("handleUsernameChange", e);
+  handleUpdatePlayer = ({ userId = 901, username, team, role }) => {
+    console.log("handleUpdatePlayer", { username, team, role });
+
+    if (MOCK_BACKEND) return this.setState({ userId, username, team, role });
   }
 
   handleCreateRoom = (roomName) => {
@@ -220,7 +227,16 @@ class App extends React.Component {
           </Route>
 
           <Route path="/setup-player">
-            <div>set up player</div>
+            {!this.state.roomId
+              ? <Redirect to="/join-room" />
+              : <SetupPlayerPage
+                  userId={this.state.userId}
+                  username={this.state.username}
+                  roomId={this.state.roomId}
+                  roomName={this.state.roomName}
+                  team={this.state.team}
+                  role={this.state.role}
+                  handleUpdatePlayer={this.handleUpdatePlayer} />}
           </Route>
 
           <Route path="/game">

@@ -33,7 +33,7 @@ const JoinRoomPage = ({
               disabled={roomId && (roomId === componentRoomId)}
               onChange={(e) => setComponentRoomId(e.target.value)}
               required
-              autocomplete="false"
+              autoComplete="nope"
             />
           </div>
           <small id="roomJoinHelp" className="form-text text-muted">Type in the Room ID</small>
