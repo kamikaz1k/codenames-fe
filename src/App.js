@@ -24,13 +24,15 @@ window.inspect = (obj) => {
 }
 
 const MOCK_BACKEND = true;
+const RED_TEAM = "red";
+const BLUE_TEAM = "blue";
 
 class App extends React.Component {
 
   state = Object.assign({
     userId: null,
     username: "",
-    roomId: 123,
+    roomId: null,
     roomName: "",
     team: null,
     role: null,
@@ -155,18 +157,62 @@ class App extends React.Component {
   }
 
   handleNewGame = () => {
+    if (MOCK_BACKEND) return this.setState({ ...dummyData });
     this.state.channel.push("create_game");
   }
 
   handleTeamSelection = (team) => {
+    if (MOCK_BACKEND) return this.setState({ team });
     this.state.channel.push("pick_team", { team });
   }
 
   handleGameAction = (cardId) => {
+    if (MOCK_BACKEND) return this.clientSideGameAction(cardId);
     this.state.channel.push("game_action", {action: "select", id: cardId});
   }
 
-  handleSelectWord = (word, activeTeam) => {
+  clientSideGameAction = (cardId) => {
+    if (!MOCK_BACKEND) window.alert("This should not be called...");
+    this.setState(prevState => {
+      if (prevState.state === "over") return prevState;
+
+      const word = prevState.words.find(w => w.id === cardId);
+      let gameState = prevState.state;
+
+      if (word.isRevealed) return prevState;
+
+      if (word.isDoubleAgent) {
+        setTimeout(() => window.alert(`${activeTeam} Loses!`), 500);
+        gameState = "over";
+      }
+
+      const activeTeam = prevState.activeTeam;
+      let newActiveTeam = activeTeam;
+      if (word.team && word.team !== activeTeam) {
+        console.log("### You picked the other team's card!", activeTeam, word);
+        newActiveTeam = activeTeam === RED_TEAM ? BLUE_TEAM : RED_TEAM;
+      }
+
+      let newState = {
+        ...prevState,
+        activeTeam: newActiveTeam,
+        words: prevState.words.map(w => ({
+          ...w,
+          isRevealed: w.isRevealed || w.id === cardId
+        }))
+      };
+
+      return window.inspect({
+        ...newState,
+        redTeamScore: newState.words.reduce((acc, curr) => (curr.isRevealed && curr.team === RED_TEAM) ? acc + 1 : acc, 0),
+        blueTeamScore: newState.words.reduce((acc, curr) => (curr.isRevealed && curr.team === BLUE_TEAM) ? acc + 1 : acc, 0),
+        state: gameState,
+        activeTeam: newActiveTeam
+      });
+    });
+  }
+
+  handleSelectWord = (word) => {
     word.isRevealed || this.handleGameAction(word.id);
   }
 
@@ -180,9 +226,9 @@ class App extends React.Component {
     console.log("handleCreateRoom", roomName);
     setTimeout(() => {
       const roomId = "RANDOM";
-      console.log("mocking async room creation", roomId);
-      this.setState({ roomId });
-    }, 1000);
+      console.log("mocking async room creation", roomId, roomName);
+      this.setState({ roomId, roomName });
+    }, 200);
   }
 
   render() {
