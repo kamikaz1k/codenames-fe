@@ -24,6 +24,8 @@ window.inspect = (obj) => {
   return obj;
 }
 
+// const BACKEND_URL = "//localhost:4000";
+const BACKEND_URL = "//spymanz-be.herokuapp.com";
 const DEBUG = true;
 const MOCK_BACKEND = false;
 const BASENAME = packageJson.homepage;
@@ -68,7 +70,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    const socket = new Socket("//localhost:4000/socket"); //, {params: {userToken: "123"}});
+    const socket = new Socket(BACKEND_URL + "/socket"); //, {params: {userToken: "123"}});
     socket.connect();
 
     const channel = socket.channel(LOBBY);
