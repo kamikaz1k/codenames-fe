@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  Link,
   useLocation
 } from "react-router-dom";
 
@@ -17,7 +18,7 @@ const JoinRoomPage = ({
 
   return (
     <div className="join-room-page container container-slim">
-      <h1 className="center mb-5">C O D E N A M E S</h1>
+      <Link to="/"><h1 className="center mb-5">C O D E N A M E S</h1></Link>
 
       <form onSubmit={e => e.preventDefault() || handleJoinRoom(componentRoomId)}>
         <div className="form-group">

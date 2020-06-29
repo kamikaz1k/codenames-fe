@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+  Link
+} from "react-router-dom";
+
 import Card from '../card';
 import Scorebar from '../scorebar';
 import Timer from '../timer';
@@ -28,7 +32,7 @@ const Gameboard = ({
   words
 }) => (
   <div>
-    <h1>C O D E N A M E S</h1>
+    <Link to="/"><h1>C O D E N A M E S</h1></Link>
     <h2 style={turnIndicatorStyle(activeTeam)}>{prettyTeamName[activeTeam]}'s Turn</h2>
     <div className={"timer-wrapper"}>
       <Timer classValue={"timer-container"} startedAt={Date.now()} expiresAt={Date.now() + (2 * 60 * 1000)} />

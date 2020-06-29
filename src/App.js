@@ -24,10 +24,12 @@ window.inspect = (obj) => {
   return obj;
 }
 
-const MOCK_BACKEND = true;
+const DEBUG = true;
+const MOCK_BACKEND = false;
 const BASENAME = packageJson.homepage;
 const RED_TEAM = "red";
 const BLUE_TEAM = "blue";
+const LOBBY = "room:lobby"
 
 class App extends React.Component {
 
@@ -35,7 +37,7 @@ class App extends React.Component {
     userId: null,
     username: "",
     roomId: null,
-    roomName: "",
+    roomName: "ROOM NAME!",
     team: null,
     role: null,
     words: [],
@@ -46,7 +48,7 @@ class App extends React.Component {
     redTeamTotalCards: 0,
     blueTeamScore: 0,
     blueTeamTotalCards: 0
-  }, dummyData)
+  }, MOCK_BACKEND ? dummyData : {})
 
   toast = (msg) => {
     this.setState({ msg: msg });
@@ -66,10 +68,47 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    const socket = new Socket("//localhost:4000/socket", {params: {userToken: "123"}});
+    const socket = new Socket("//localhost:4000/socket"); //, {params: {userToken: "123"}});
     socket.connect();
 
-    const channel = socket.channel("room:lobby");
+    const channel = socket.channel(LOBBY);
+
+    channel.on("player_state_update", payload =>{
+      console.log(`[${Date()}] ${JSON.stringify(payload.body)}`);
+
+      const {
+        room_id,
+        user_id
+      } = payload.body;
+
+      this.setState({
+        userId: user_id,
+        roomId: room_id
+      });
+
+      if (room_id) {
+        channel.leave();
+        this.setupRoomChannel(socket, room_id);
+      }
+    });
+
+    channel.join()
+      .receive("ok", ({messages}) => console.log("fetching player_state_update", channel.push("push_player_state")) )
+      .receive("error", ({reason}) => console.log("failed join", reason) )
+      .receive("timeout", () => console.log("Networking issue. Still waiting..."));
+
+    this.setState({
+      channel, socket
+    });
+
+    window.channel = channel;
+    window.socket = socket;
+
+  }
+
+  setupRoomChannel = (socket, roomId) => {
+    console.log(`setting up channel room:${roomId}`);
+    const channel = socket.channel(`room:${roomId}`);
 
     channel.on("new_msg", payload => {
       console.log(`[${Date()}] ${JSON.stringify(payload.body)}`);
@@ -85,24 +124,27 @@ class App extends React.Component {
     });
 
     channel.on("player_state_update", payload =>{
-      console.log(`[${Date()}] ${JSON.stringify(payload.body)}`);
+      console.log(`[${Date()}] player_state_update: ${JSON.stringify(payload.body)}`);
 
       const {
         team,
         room_id,
-        user_id
+        user_id,
+        username,
+        role
       } = payload.body;
 
       this.setState({
         userId: user_id,
         roomId: room_id,
-        team: team
-      })
+        username,
+        role,
+        team
+      });
     });
 
     channel.on("game_update", payload => {
-      // console.log(`[${Date()}] ${JSON.stringify(payload.body)}`);
-      console.log(`[${Date()}] GAME UPDATE`);
+      console.log(`[${Date()}] GAME UPDATE`, payload.body);
 
       const {
         active_team,
@@ -128,17 +170,12 @@ class App extends React.Component {
     });
 
     channel.join()
-      .receive("ok", ({messages}) => console.log("catching up", messages) )
+      .receive("ok", ({messages}) => console.log("fetching player_state_update", channel.push("push_player_state")) )
       .receive("error", ({reason}) => console.log("failed join", reason) )
       .receive("timeout", () => console.log("Networking issue. Still waiting..."));
 
-    this.setState({
-      channel, socket
-    });
-
+    this.setState({ channel });
     window.channel = channel;
-    window.socket = socket;
-
   }
 
   _handleClick = () => {
@@ -154,8 +191,12 @@ class App extends React.Component {
 
     if (MOCK_BACKEND) return this.setState({ roomId, roomName });
 
-    roomId = roomId || window.prompt("Room ID please?");
-    this.state.channel.push("join_room", {room: parseInt(roomId)});
+    if (this.state.channel.topic === LOBBY) {
+      console.log("closing lobby channel", this.state.channel);
+      this.state.channel.leave();
+
+      this.setupRoomChannel(this.state.socket, roomId);
+    }
   }
 
   handleNewGame = () => {
@@ -169,6 +210,9 @@ class App extends React.Component {
   }
 
   handleGameAction = (cardId) => {
+    console.log("handleGameAction");
+    if (this.state.activeTeam !== this.state.team) this.toast("not your team's turn!");
+
     if (MOCK_BACKEND) return this.clientSideGameAction(cardId);
     this.state.channel.push("game_action", {action: "select", id: cardId});
   }
@@ -215,27 +259,32 @@ class App extends React.Component {
   }
 
   handleSelectWord = (word) => {
+    console.log("handleSelectWord");
     word.isRevealed || this.handleGameAction(word.id);
   }
 
-  handleUpdatePlayer = ({ userId = 901, username, team, role }) => {
+  handleUpdatePlayer = ({ username, team, role }) => {
     console.log("handleUpdatePlayer", { username, team, role });
 
-    if (MOCK_BACKEND) return this.setState({ userId, username, team, role });
+    if (MOCK_BACKEND) return this.setState({ username, team, role });
+    this.state.channel.push("update_player", { username, team, role });
   }
 
   handleCreateRoom = (roomName) => {
     console.log("handleCreateRoom", roomName);
-    setTimeout(() => {
+    if (MOCK_BACKEND) return setTimeout(() => {
       const roomId = "RANDOM";
       console.log("mocking async room creation", roomId, roomName);
       this.setState({ roomId, roomName });
     }, 200);
+
+    this.state.channel.push("create_room");
   }
 
   render() {
     return (
       <Router basename={BASENAME}>
+        {DEBUG && <div>Player: {JSON.stringify({ userId: this.state.userId, username: this.state.username, roomId: this.state.roomId, roomName: this.state.roomName, team: this.state.team, role: this.state.role })}</div>}
         <Switch>
           <Route exact path="/">
             <div className="container center">
@@ -288,15 +337,17 @@ class App extends React.Component {
           </Route>
 
           <Route path="/game">
-            <GamePage
-              state={this.state}
-              handleNewRoom={this.handleNewRoom}
-              handleJoinRoom={this.handleJoinRoom}
-              handleNewGame={this.handleNewGame}
-              handleTeamSelection={this.handleTeamSelection}
-              handleGameAction={this.handleGameAction}
-              handleSelectWord={this.handleSelectWord}
-            />
+            {!this.state.roomId
+              ? <Redirect to="/join-room" />
+              : <GamePage
+                  state={this.state}
+                  handleNewRoom={this.handleNewRoom}
+                  handleJoinRoom={this.handleJoinRoom}
+                  handleNewGame={this.handleNewGame}
+                  handleTeamSelection={this.handleTeamSelection}
+                  handleGameAction={this.handleGameAction}
+                  handleSelectWord={this.handleSelectWord}
+                />}
           </Route>
 
           <Route>

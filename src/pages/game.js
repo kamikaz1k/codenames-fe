@@ -17,12 +17,9 @@ const Game = ({
     <button onClick={() => handleTeamSelection("red")}>I am red!</button>
     <button onClick={() => handleTeamSelection("blue")}>I am blue!</button>
     <button onClick={() => handleGameAction(2)}>Take action!</button>
-    <div>Player: {JSON.stringify({
-      userId: state.userId, username: state.username, roomId: state.roomId, roomName: state.roomName, team: state.team, role: state.role
-    })}</div>
     <div>Game has {state.state}</div>
     {state.losingTeam && <div>{state.losingTeam} lost!</div>}
-    {state.msg && <div>Error: {state.msg}</div>}
+    {state.msg && <div className="alert alert-danger" role="alert">Error: {state.msg}</div>}
     <Gameboard
       activeTeam={state.activeTeam}
       redTeamScore={state.redTeamScore}
