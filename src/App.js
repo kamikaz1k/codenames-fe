@@ -7,7 +7,7 @@ import {
   Link
 } from "react-router-dom";
 import { Socket } from 'phoenix';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // import logo from './logo.svg';
@@ -58,10 +58,11 @@ class App extends React.Component {
   }, MOCK_BACKEND ? dummyData : {})
 
   toast = (msg, isError = true) => {
-    isError ? toast.error(msg) : toast(msg);
+    isError ? toast(msg, { className: 'alert alert-danger' }) : toast(msg, { bodyClassName: "alert alert-info" });
   }
 
   componentDidMount() {
+    if (MOCK_BACKEND) return;
     const socket = new Socket(BACKEND_URL + "/socket"); //, {params: {userToken: "123"}});
     socket.connect();
 
@@ -214,6 +215,7 @@ class App extends React.Component {
     if (!MOCK_BACKEND) window.alert("This should not be called...");
     this.setState(prevState => {
       if (prevState.state === "over") return prevState;
+      if (prevState.activeTeam !== prevState.team) return prevState;
 
       const word = prevState.words.find(w => w.id === cardId);
       let gameState = prevState.state;
@@ -367,7 +369,13 @@ class App extends React.Component {
             </ul>
           </Route>
         </Switch>
-        <ToastContainer />
+
+        <ToastContainer
+          autoClose={2000}
+          hideProgressBar={true}
+          closeOnClick={true}
+          closeButton={false}
+          transition={Slide} />
       </Router>
     );
   }
