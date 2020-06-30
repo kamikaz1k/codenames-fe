@@ -8,7 +8,8 @@ const Game = ({
   handleNewGame,
   handleTeamSelection,
   handleGameAction,
-  handleSelectWord
+  handleSelectWord,
+  setShowColours
 }) => (
   <div className="App">
     <button onClick={() => handleNewRoom()}>Sign Into Room</button>
@@ -17,6 +18,7 @@ const Game = ({
     <button onClick={() => handleTeamSelection("red")}>I am red!</button>
     <button onClick={() => handleTeamSelection("blue")}>I am blue!</button>
     <button onClick={() => handleGameAction(2)}>Take action!</button>
+    {state.role === "spymaster" && <button onClick={() => setShowColours(!state.showColours)}>{state.showColours ? 'Show' : 'Hide'} Colours</button>}
     <div>Game has {state.state}</div>
     {state.losingTeam && <div>{state.losingTeam} lost!</div>}
     {state.msg && <div className="alert alert-danger" role="alert">Error: {state.msg}</div>}
@@ -28,7 +30,8 @@ const Game = ({
       blueTeamTotalCards={state.blueTeamTotalCards}
       players={state.room.players || []}
       handleSelectWord={handleSelectWord}
-      words={state.words} />
+      words={state.words.map(w => ({ ...w, isRevealed: state.showColours ? true : w.isRevealed }))}
+      showColours={state.showColours} />
   </div>
 );
 

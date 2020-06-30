@@ -53,7 +53,8 @@ class App extends React.Component {
     redTeamScore: 0,
     redTeamTotalCards: 0,
     blueTeamScore: 0,
-    blueTeamTotalCards: 0
+    blueTeamTotalCards: 0,
+    showColours: false,
   }, MOCK_BACKEND ? dummyData : {})
 
   toast = (msg, isError = true) => {
@@ -273,6 +274,10 @@ class App extends React.Component {
     this.state.channel.push("create_room");
   }
 
+  setShowColours = (showColours) => {
+    this.setState({ showColours });
+  }
+
   render() {
     return (
       <Router basename={BASENAME}>
@@ -339,6 +344,7 @@ class App extends React.Component {
                   handleTeamSelection={this.handleTeamSelection}
                   handleGameAction={this.handleGameAction}
                   handleSelectWord={this.handleSelectWord}
+                  setShowColours={this.setShowColours}
                 />}
           </Route>
 
