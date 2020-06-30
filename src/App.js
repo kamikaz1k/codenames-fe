@@ -337,7 +337,17 @@ class App extends React.Component {
             {!this.state.roomId
               ? <Redirect to="/join-room" />
               : <GamePage
-                  state={this.state}
+                  activeTeam={this.state.activeTeam}
+                  blueTeamScore={this.state.blueTeamScore}
+                  blueTeamTotalCards={this.state.blueTeamTotalCards}
+                  losingTeam={this.state.losingTeam}
+                  redTeamScore={this.state.redTeamScore}
+                  redTeamTotalCards={this.state.redTeamTotalCards}
+                  role={this.state.role}
+                  room={this.state.room}
+                  state={this.state.state}
+                  showColours={this.state.showColours}
+                  words={this.state.words}
                   handleNewRoom={this.handleNewRoom}
                   handleJoinRoom={this.handleJoinRoom}
                   handleNewGame={this.handleNewGame}

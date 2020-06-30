@@ -1,8 +1,23 @@
 import React from 'react';
 import Gameboard from '../components/gameboard';
 
+const prettyTeamName = {
+  red: "Red",
+  blue: "Blue"
+};
+
 const Game = ({
+  activeTeam,
+  blueTeamScore,
+  blueTeamTotalCards,
+  losingTeam,
+  redTeamScore,
+  redTeamTotalCards,
+  role,
+  room,
   state,
+  showColours,
+  words,
   handleNewRoom,
   handleJoinRoom,
   handleNewGame,
@@ -18,20 +33,19 @@ const Game = ({
     <button onClick={() => handleTeamSelection("red")}>I am red!</button>
     <button onClick={() => handleTeamSelection("blue")}>I am blue!</button>
     <button onClick={() => handleGameAction(2)}>Take action!</button>
-    {state.role === "spymaster" && <button onClick={() => setShowColours(!state.showColours)}>{state.showColours ? 'Show' : 'Hide'} Colours</button>}
-    <div>Game has {state.state}</div>
-    {state.losingTeam && <div>{state.losingTeam} lost!</div>}
-    {state.msg && <div className="alert alert-danger" role="alert">Error: {state.msg}</div>}
+    {role === "spymaster" && <button onClick={() => setShowColours(!showColours)}>{showColours ? 'Show' : 'Hide'} Colours</button>}
+    <div>Game has {state}</div>
+    {losingTeam && <div>{prettyTeamName(losingTeam)} lost!</div>}
     <Gameboard
-      activeTeam={state.activeTeam}
-      redTeamScore={state.redTeamScore}
-      redTeamTotalCards={state.redTeamTotalCards}
-      blueTeamScore={state.blueTeamScore}
-      blueTeamTotalCards={state.blueTeamTotalCards}
-      players={state.room.players || []}
+      activeTeam={activeTeam}
+      redTeamScore={redTeamScore}
+      redTeamTotalCards={redTeamTotalCards}
+      blueTeamScore={blueTeamScore}
+      blueTeamTotalCards={blueTeamTotalCards}
+      players={room.players || []}
       handleSelectWord={handleSelectWord}
-      words={state.words.map(w => ({ ...w, isRevealed: state.showColours ? true : w.isRevealed }))}
-      showColours={state.showColours} />
+      words={words.map(w => ({ ...w, isRevealed: showColours ? true : w.isRevealed }))}
+      showColours={showColours} />
   </div>
 );
 
