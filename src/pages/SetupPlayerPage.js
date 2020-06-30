@@ -43,6 +43,7 @@ const SetupPlayerPage = ({
               onChange={(e) => setComponentUsername(e.target.value)}
               required
               autoComplete="nope"
+              autoFocus
             />
           </div>
           <small id="usernameHelp" className="form-text text-muted">Up to 12 characters</small>

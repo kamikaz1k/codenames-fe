@@ -35,6 +35,7 @@ const JoinRoomPage = ({
               onChange={(e) => setComponentRoomId(e.target.value)}
               required
               autoComplete="nope"
+              autoFocus
             />
           </div>
           <small id="roomJoinHelp" className="form-text text-muted">Type in the Room ID</small>
