@@ -24,15 +24,15 @@ window.inspect = (obj) => {
   return obj;
 }
 
-const BACKEND_URL = process.env.BACKEND_URL || "//localhost:4000";
-console.log(BACKEND_URL);
-// const BACKEND_URL = "//spymanz-be.herokuapp.com";
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "//localhost:4000";
 const DEBUG = true;
 const MOCK_BACKEND = false;
 const BASENAME = packageJson.homepage;
 const RED_TEAM = "red";
 const BLUE_TEAM = "blue";
 const LOBBY = "room:lobby"
+
+console.log(BACKEND_URL);
 
 class App extends React.Component {
 
