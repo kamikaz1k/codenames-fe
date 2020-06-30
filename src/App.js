@@ -47,7 +47,7 @@ class App extends React.Component {
     team: null,
     role: null,
     words: [],
-    state: null,
+    gameState: null,
     losingTeam: null,
     activeTeam: "red",
     redTeamScore: 0,
@@ -155,7 +155,7 @@ class App extends React.Component {
         redTeamScore: red_score,
         blueTeamScore: blue_score,
         losingTeam: losing_team,
-        state
+        gameState: state
       });
     });
 
@@ -245,8 +245,8 @@ class App extends React.Component {
         ...newState,
         redTeamScore: newState.words.reduce((acc, curr) => (curr.isRevealed && curr.team === RED_TEAM) ? acc + 1 : acc, 0),
         blueTeamScore: newState.words.reduce((acc, curr) => (curr.isRevealed && curr.team === BLUE_TEAM) ? acc + 1 : acc, 0),
-        state: gameState,
-        activeTeam: newActiveTeam
+        activeTeam: newActiveTeam,
+        gameState
       });
     });
   }
@@ -345,7 +345,7 @@ class App extends React.Component {
                   redTeamTotalCards={this.state.redTeamTotalCards}
                   role={this.state.role}
                   room={this.state.room}
-                  state={this.state.state}
+                  gameState={this.state.gameState}
                   showColours={this.state.showColours}
                   words={this.state.words}
                   handleNewRoom={this.handleNewRoom}

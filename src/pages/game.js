@@ -15,7 +15,7 @@ const Game = ({
   redTeamTotalCards,
   role,
   room,
-  state,
+  gameState,
   showColours,
   words,
   handleNewRoom,
@@ -34,7 +34,7 @@ const Game = ({
     <button onClick={() => handleTeamSelection("blue")}>I am blue!</button>
     <button onClick={() => handleGameAction(2)}>Take action!</button>
     {role === "spymaster" && <button onClick={() => setShowColours(!showColours)}>{showColours ? 'Show' : 'Hide'} Colours</button>}
-    <div>Game has {state}</div>
+    <div>This game has {gameState}</div>
     {losingTeam && <div>{prettyTeamName(losingTeam)} lost!</div>}
     <Gameboard
       activeTeam={activeTeam}
