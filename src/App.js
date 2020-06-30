@@ -342,13 +342,14 @@ class App extends React.Component {
                   activeTeam={this.state.activeTeam}
                   blueTeamScore={this.state.blueTeamScore}
                   blueTeamTotalCards={this.state.blueTeamTotalCards}
+                  gameState={this.state.gameState}
                   losingTeam={this.state.losingTeam}
                   redTeamScore={this.state.redTeamScore}
                   redTeamTotalCards={this.state.redTeamTotalCards}
                   role={this.state.role}
                   room={this.state.room}
-                  gameState={this.state.gameState}
                   showColours={this.state.showColours}
+                  team={this.state.team}
                   words={this.state.words}
                   handleNewRoom={this.handleNewRoom}
                   handleJoinRoom={this.handleJoinRoom}

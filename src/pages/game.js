@@ -10,13 +10,14 @@ const Game = ({
   activeTeam,
   blueTeamScore,
   blueTeamTotalCards,
+  gameState,
   losingTeam,
   redTeamScore,
   redTeamTotalCards,
   role,
   room,
-  gameState,
   showColours,
+  team,
   words,
   handleNewRoom,
   handleJoinRoom,
@@ -38,6 +39,7 @@ const Game = ({
     {losingTeam && <div>{prettyTeamName(losingTeam)} lost!</div>}
     <Gameboard
       activeTeam={activeTeam}
+      yourTeam={team}
       redTeamScore={redTeamScore}
       redTeamTotalCards={redTeamTotalCards}
       blueTeamScore={blueTeamScore}
