@@ -4,12 +4,26 @@ const scorebarStyles = {
   margin: "1rem"
 };
 
+const prettyTeamName = {
+  red: "Red",
+  blue: "Blue"
+};
+
 const colourForTeam = (team) => ({
   red: "#CD3B49",
   blue: "#80C2FF"
 }[team.toLowerCase()]);
 
-const addStyles = (more = {}) => Object.assign({}, scorebarStyles, more)
+const addComponentStyles = (more) => Object.assign({}, scorebarStyles, more || {});
+
+const addScoreBoxStyles = ({ activeTeam, team }) => ({
+  border: `2px solid ${colourForTeam(team)}`,
+  borderRadius: "20px",
+  height: "138px",
+  color: activeTeam === team && "white",
+  background: activeTeam === team && colourForTeam(team),
+  fontWeight: activeTeam === team && "bold"
+});
 
 const Scorebar = ({
   activeTeam,
@@ -20,14 +34,14 @@ const Scorebar = ({
   players,
   spymaster
 }) => (
-  <div className={classValue} style={addStyles()}>
-    <div style={{border: `2px solid ${colourForTeam(team)}`, borderRadius: "20px"}}>
+  <div className={classValue} style={addComponentStyles()}>
+    <div style={addScoreBoxStyles({ activeTeam, team })}>
       <p>Score</p>
       <p>{`${score} / ${total}`}</p>
     </div>
 
     <p style={{color: colourForTeam(team)}}>
-      {team}
+      {prettyTeamName[team]}
     </p>
 
     <div>

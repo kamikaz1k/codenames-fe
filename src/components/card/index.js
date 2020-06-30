@@ -8,8 +8,8 @@ const cardStyles = {
 };
 
 const bgColourForTeam = (team) => ({
-  Red: "#CD3B49",
-  Blue: "#80C2FF",
+  red: "#CD3B49",
+  blue: "#80C2FF",
   null: "#FCECD7",
   doubleAgent: "black"
 }[team]);
@@ -33,7 +33,7 @@ const prepareCardStyle = (word) => {
 const Card = ({ classValue, handleSelectWord, word }) => (
   <div
     onClick={(e) => e.preventDefault() || handleSelectWord()}
-    className={`${classValue} card-hover`}
+    className={`${classValue} game-card card-hover`}
     style={prepareCardStyle(word)}
   >
     <p>{word.value}</p>

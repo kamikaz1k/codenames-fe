@@ -1,13 +1,22 @@
 import React from 'react';
+import {
+  Link
+} from "react-router-dom";
+
 import Card from '../card';
 import Scorebar from '../scorebar';
 import Timer from '../timer';
 import './Gameboard.css'
 
 const colourForTeam = (team) => ({
-  Red: "#CD3B49",
-  Blue: "#80C2FF"
+  red: "#CD3B49",
+  blue: "#80C2FF"
 }[team]);
+
+const prettyTeamName = {
+  red: "Red",
+  blue: "Blue"
+};
 
 const turnIndicatorStyle = (team) => ({
   color: colourForTeam(team)
@@ -20,11 +29,12 @@ const Gameboard = ({
   redTeamTotalCards,
   blueTeamScore,
   blueTeamTotalCards,
+  players,
   words
 }) => (
   <div>
-    <h1>C O D E N A M E S</h1>
-    <h2 style={turnIndicatorStyle(activeTeam)}>{activeTeam}'s Turn</h2>
+    <Link to="/"><h1>C O D E N A M E S</h1></Link>
+    <h2 style={turnIndicatorStyle(activeTeam)}>{prettyTeamName[activeTeam]}'s Turn</h2>
     <div className={"timer-wrapper"}>
       <Timer classValue={"timer-container"} startedAt={Date.now()} expiresAt={Date.now() + (2 * 60 * 1000)} />
     </div>
@@ -34,9 +44,9 @@ const Gameboard = ({
         classValue={"left-sidebar"}
         score={redTeamScore}
         total={redTeamTotalCards}
-        team={"Red"}
-        players={["shoyu", "scallion", "nori"]}
-        spymaster={"chasu"}
+        team={"red"}
+        players={players.filter(p => p.team === "red").map(p => p.username || p.user_id)}
+        spymaster={players.filter(p => p.team === "red" && p.role === "spymaster").map(p => p.username || p.user_id).join(" and ")}
         />
 
       <div className="gameboard">
@@ -59,9 +69,9 @@ const Gameboard = ({
         classValue={"right-sidebar"}
         score={blueTeamScore}
         total={blueTeamTotalCards}
-        team={"Blue"}
-        players={["shoyu", "scallion", "nori"]}
-        spymaster={"chasu"}
+        team={"blue"}
+        players={players.filter(p => p.team === "blue").map(p => p.username || p.user_id)}
+        spymaster={players.filter(p => p.team === "blue" && p.role === "spymaster").map(p => p.username || p.user_id).join(" and ")}
         />
     </div>
   </div>
