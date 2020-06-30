@@ -26,6 +26,7 @@ const Game = ({
       redTeamTotalCards={state.redTeamTotalCards}
       blueTeamScore={state.blueTeamScore}
       blueTeamTotalCards={state.blueTeamTotalCards}
+      players={state.room.players || []}
       handleSelectWord={handleSelectWord}
       words={state.words} />
   </div>

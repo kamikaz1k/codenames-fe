@@ -24,8 +24,9 @@ window.inspect = (obj) => {
   return obj;
 }
 
-// const BACKEND_URL = "//localhost:4000";
-const BACKEND_URL = "//spymanz-be.herokuapp.com";
+const BACKEND_URL = process.env.BACKEND_URL || "//localhost:4000";
+console.log(BACKEND_URL);
+// const BACKEND_URL = "//spymanz-be.herokuapp.com";
 const DEBUG = true;
 const MOCK_BACKEND = false;
 const BASENAME = packageJson.homepage;
@@ -40,6 +41,7 @@ class App extends React.Component {
     username: "",
     roomId: null,
     roomName: "ROOM NAME!",
+    room: {},
     team: null,
     role: null,
     words: [],
@@ -171,6 +173,13 @@ class App extends React.Component {
       });
     });
 
+    channel.on("room_update", payload =>{
+      console.log(`[${Date()}] room_update: ${JSON.stringify(payload.room)}`, payload.room);
+
+      const { room = {} } = payload;
+      this.setState({ room });
+    });
+
     channel.join()
       .receive("ok", ({messages}) => console.log("fetching player_state_update", channel.push("push_player_state")) )
       .receive("error", ({reason}) => console.log("failed join", reason) )
@@ -208,7 +217,7 @@ class App extends React.Component {
 
   handleTeamSelection = (team) => {
     if (MOCK_BACKEND) return this.setState({ team });
-    this.state.channel.push("pick_team", { team });
+    this.state.channel.push("update_player", { team });
   }
 
   handleGameAction = (cardId) => {

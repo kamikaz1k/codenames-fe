@@ -29,6 +29,7 @@ const Gameboard = ({
   redTeamTotalCards,
   blueTeamScore,
   blueTeamTotalCards,
+  players,
   words
 }) => (
   <div>
@@ -44,8 +45,8 @@ const Gameboard = ({
         score={redTeamScore}
         total={redTeamTotalCards}
         team={"red"}
-        players={["shoyu", "scallion", "nori"]}
-        spymaster={"chasu"}
+        players={players.filter(p => p.team === "red").map(p => p.username || p.user_id)}
+        spymaster={players.filter(p => p.team === "red" && p.role === "spymaster").map(p => p.username || p.user_id).join(" and ")}
         />
 
       <div className="gameboard">
@@ -69,8 +70,8 @@ const Gameboard = ({
         score={blueTeamScore}
         total={blueTeamTotalCards}
         team={"blue"}
-        players={["shoyu", "scallion", "nori"]}
-        spymaster={"chasu"}
+        players={players.filter(p => p.team === "blue").map(p => p.username || p.user_id)}
+        spymaster={players.filter(p => p.team === "blue" && p.role === "spymaster").map(p => p.username || p.user_id).join(" and ")}
         />
     </div>
   </div>

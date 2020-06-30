@@ -17,7 +17,7 @@
     "pack": "react-scripts build && cp -r build/ dev/",
     "start": "react-scripts start",
     "ssl": "HTTPS=true react-scripts start",
-    "build": "react-scripts build",
+    "build": "BACKEND_URL='//spymanz-be.herokuapp.com' react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
