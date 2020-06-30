@@ -7,6 +7,8 @@ import {
   Link
 } from "react-router-dom";
 import { Socket } from 'phoenix';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // import logo from './logo.svg';
 import './App.css';
@@ -54,21 +56,8 @@ class App extends React.Component {
     blueTeamTotalCards: 0
   }, MOCK_BACKEND ? dummyData : {})
 
-  toast = (msg) => {
-    this.setState({ msg: msg });
-
-    setTimeout(() => {
-      this.setState(prevState => {
-        if (prevState.msg === msg) {
-          return {
-            ...prevState,
-            msg: null
-          }
-        }
-
-        return msg;
-      });
-    }, 2000);
+  toast = (msg, isError = true) => {
+    isError ? toast.error(msg) : toast(msg);
   }
 
   componentDidMount() {
@@ -222,7 +211,7 @@ class App extends React.Component {
 
   handleGameAction = (cardId) => {
     console.log("handleGameAction");
-    if (this.state.activeTeam !== this.state.team) this.toast("not your team's turn!");
+    if (this.state.activeTeam !== this.state.team) this.toast("It's not your team's turn!");
 
     if (MOCK_BACKEND) return this.clientSideGameAction(cardId);
     this.state.channel.push("game_action", {action: "select", id: cardId});
@@ -370,6 +359,7 @@ class App extends React.Component {
             </ul>
           </Route>
         </Switch>
+        <ToastContainer />
       </Router>
     );
   }
