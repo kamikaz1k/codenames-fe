@@ -103,10 +103,6 @@ class App extends React.Component {
     console.log(`setting up channel room:${roomId}`);
     const channel = socket.channel(`room:${roomId}`);
 
-    channel.on("new_msg", payload => {
-      console.log(`[${Date()}] ${JSON.stringify(payload.body)}`);
-    });
-
     channel.on("player_message", payload => {
       if (payload.error) {
         console.error(`[${Date()}] ${payload.error}`);
@@ -137,7 +133,7 @@ class App extends React.Component {
     });
 
     channel.on("game_update", payload => {
-      console.log(`[${Date()}] GAME UPDATE`, payload.body);
+      console.log(`[${Date()}] game_update`, payload.body);
 
       const {
         active_team,
@@ -176,10 +172,6 @@ class App extends React.Component {
 
     this.setState({ channel });
     window.channel = channel;
-  }
-
-  _handleClick = () => {
-    this.state.channel.push("new_msg", { body: "I was clicked!" });
   }
 
   handleNewRoom = () => {
