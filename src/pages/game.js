@@ -1,11 +1,6 @@
 import React from 'react';
 import Gameboard from '../components/gameboard';
 
-const prettyTeamName = {
-  red: "Red",
-  blue: "Blue"
-};
-
 const Game = ({
   activeTeam,
   blueTeamScore,
@@ -25,18 +20,16 @@ const Game = ({
   handleTeamSelection,
   handleGameAction,
   handleSelectWord,
+  handleEndTurn,
   setShowColours
 }) => (
   <div className="App">
-    <button onClick={() => handleNewRoom()}>Sign Into Room</button>
+    {process.env.NODE_ENV !== "development" && <span><button onClick={() => handleNewRoom()}>Sign Into Room</button>
     <button onClick={() => handleJoinRoom()}>Join Room</button>
     <button onClick={() => handleNewGame()}>New Game</button>
     <button onClick={() => handleTeamSelection("red")}>I am red!</button>
     <button onClick={() => handleTeamSelection("blue")}>I am blue!</button>
-    <button onClick={() => handleGameAction(2)}>Take action!</button>
-    {role === "spymaster" && <button onClick={() => setShowColours(!showColours)}>{showColours ? 'Show' : 'Hide'} Colours</button>}
-    <div>This game has {gameState}</div>
-    {losingTeam && <div>{prettyTeamName(losingTeam)} lost!</div>}
+    <button onClick={() => handleGameAction(2)}>Take action!</button></span>}
     <Gameboard
       activeTeam={activeTeam}
       yourTeam={team}
@@ -46,7 +39,11 @@ const Game = ({
       blueTeamTotalCards={blueTeamTotalCards}
       players={room.players || []}
       handleSelectWord={handleSelectWord}
+      handleNewGame={handleNewGame}
+      handleEndTurn={handleEndTurn}
       words={words.map(w => ({ ...w, isRevealed: showColours ? true : w.isRevealed }))}
+      role={role}
+      setShowColours={setShowColours}
       showColours={showColours} />
   </div>
 );
