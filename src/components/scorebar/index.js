@@ -1,4 +1,5 @@
 import React from 'react';
+import colours from '../../utils/colours';
 
 const scorebarStyles = {
   margin: "1rem"
@@ -10,8 +11,8 @@ const prettyTeamName = {
 };
 
 const colourForTeam = (team) => ({
-  red: "#CD3B49",
-  blue: "#80C2FF"
+  red: colours.darkRed,
+  blue: colours.darkBlue
 }[team.toLowerCase()]);
 
 const addComponentStyles = (more) => Object.assign({}, scorebarStyles, more || {});
@@ -36,20 +37,24 @@ const Scorebar = ({
 }) => (
   <div className={classValue} style={addComponentStyles()}>
     <div style={addScoreBoxStyles({ activeTeam, team })}>
-      <p>Score</p>
-      <p>{`${score} / ${total}`}</p>
+      <p className="p-2">Score</p>
+      <p className="pt-4">{`${score} / ${total}`}</p>
     </div>
 
-    <p style={{color: colourForTeam(team)}}>
+    <p className="my-4" style={{color: colourForTeam(team), fontWeight: 'bold'}}>
       {prettyTeamName[team]}
     </p>
 
-    <div>
-      <p style={{color: colourForTeam(team)}}>Players</p>
-      {players.map((player, idx) => <p key={idx}>{player.username || `(${player.user_id}`}</p>)}
+    <div className="mb-2">
+      <h3 style={{color: colourForTeam(team)}}>Players</h3>
+      <div>
+        {players.map((player, idx) =>
+          <p className="mb-0" key={idx}>{player.username || `(${player.user_id}`}</p>)
+        }
+      </div>
     </div>
 
-    <p style={{color: colourForTeam(team)}}>Spymaster</p>
+    <h3 style={{color: colourForTeam(team)}}>Spymaster</h3>
     <p>{spymaster}</p>
   </div>
 );
