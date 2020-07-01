@@ -31,11 +31,13 @@ class Timer extends React.Component {
 
   // Wait until the component has mounted to start the animation frame
   componentDidMount() {
+    this._isMounted = true;
     this.start()
   }
 
   // Clean up by cancelling any animation frame previously scheduled
   componentWillUnmount() {
+    this._isMounted = false;
     this.stop()
   }
 
@@ -44,6 +46,8 @@ class Timer extends React.Component {
   }
 
   tick = () => {
+    if (!this._isMounted) return;
+
     const timeLeft = getTimeRemaining(this.props.expiresAt, this.props.startedAt);
 
     if (timeLeft.total <= 0) {
