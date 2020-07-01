@@ -1,4 +1,6 @@
 export default {
+  roomId: 123,
+
   host: "host",
   activeTeam: "blue",
   state: "started",
@@ -33,5 +35,17 @@ export default {
     {value: "garbage", id: 23, team: "red", isDoubleAgent: false, isRevealed: false},
     {value: "lover", id: 24, team: "red", isDoubleAgent: false, isRevealed: false},
     {value: "organize", id: 25, team: null, isDoubleAgent: false, isRevealed: false}
-  ]
+  ],
+  room: {
+    players: [
+      {"username":"shoyu","user_id":823115,"team":"red","room_id":145020,"role":"player"},
+      {"username":"scallion","user_id":823113,"team":"red","room_id":145020,"role":"player"},
+      {"username":"nori","user_id":823117,"team":"red","room_id":145020,"role":"player"},
+      {"username":"chasu","user_id":823111,"team":"red","room_id":145020,"role":"spymaster"},
+      {"username":"shoyu","user_id":723115,"team":"blue","room_id":145020,"role":"player"},
+      {"username":"scallion","user_id":723113,"team":"blue","room_id":145020,"role":"player"},
+      {"username":"nori","user_id":723117,"team":"blue","room_id":145020,"role":"player"},
+      {"username":"chasu","user_id":723111,"team":"blue","room_id":145020,"role":"spymaster"}
+    ]
+  }
 };
