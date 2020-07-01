@@ -1,8 +1,10 @@
 import React from 'react';
+import colours from '../../utils/colours';
+
 import './Card.css';
 
 const cardStyles = {
-  border: "2px black solid",
+  backgroundColor: colours.lightGrey,
   borderRadius: "10px",
   cursor: "pointer"
 };
@@ -25,6 +27,7 @@ const prepareCardStyle = (word) => {
   if (word.isRevealed) {
     const bgColour = bgColourForTeam(doubleAgent || word.team);
     teamStyles.backgroundColor = bgColour;
+    teamStyles.border = word.team ? null : "1px black solid";
     Object.assign(teamStyles, addFontColourForBgColour(bgColour));
   }
   return Object.assign({}, cardStyles, teamStyles);

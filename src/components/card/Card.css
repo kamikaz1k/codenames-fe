@@ -4,6 +4,7 @@
 }
 
 .game-card p {
+  font-weight: bold;
   display: block;
   margin-block-start: 1em;
   margin-block-end: 1em;
