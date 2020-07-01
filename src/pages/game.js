@@ -30,6 +30,7 @@ const Game = ({
     <button onClick={() => handleTeamSelection("red")}>I am red!</button>
     <button onClick={() => handleTeamSelection("blue")}>I am blue!</button>
     <button onClick={() => handleGameAction(2)}>Take action!</button></span>}
+    <button className="btn btn-secondary" onClick={() => handleNewGame()}>New Game</button>
     <Gameboard
       activeTeam={activeTeam}
       yourTeam={team}
@@ -38,6 +39,7 @@ const Game = ({
       blueTeamScore={blueTeamScore}
       blueTeamTotalCards={blueTeamTotalCards}
       players={room.players || []}
+      gameState={gameState}
       handleSelectWord={handleSelectWord}
       handleNewGame={handleNewGame}
       handleEndTurn={handleEndTurn}

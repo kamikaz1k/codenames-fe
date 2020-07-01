@@ -3,7 +3,7 @@ export default {
 
   host: "host",
   activeTeam: "blue",
-  state: "started",
+  gameState: "started",
   losingTeam: null,
   blueTeamTotalCards: 8,
   redTeamTotalCards: 7,

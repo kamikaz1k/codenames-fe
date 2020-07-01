@@ -276,6 +276,15 @@ class App extends React.Component {
     this.state.channel.push("create_room");
   }
 
+  handleEndTurn = ({ activeTeam, team }) => {
+    console.log("handleEndTurn", activeTeam, team);
+
+    if (activeTeam !== team) this.toast("It's not your team's turn!");
+
+    if (MOCK_BACKEND) this.setState({ activeTeam: activeTeam === 'red' ? 'blue' : 'red' });
+    this.state.channel.push("game_action", { endTurn: true });
+  }
+
   setShowColours = (showColours) => {
     this.setState({ showColours });
   }
@@ -351,6 +360,7 @@ class App extends React.Component {
                   showColours={this.state.showColours}
                   team={this.state.team}
                   words={this.state.words}
+                  handleEndTurn={this.handleEndTurn}
                   handleNewRoom={this.handleNewRoom}
                   handleJoinRoom={this.handleJoinRoom}
                   handleNewGame={this.handleNewGame}

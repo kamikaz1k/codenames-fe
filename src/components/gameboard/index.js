@@ -24,8 +24,10 @@ const turnIndicatorStyle = (team) => ({
 
 const Gameboard = ({
   activeTeam,
+  gameState,
   handleSelectWord,
   handleNewGame,
+  handleEndTurn,
   redTeamScore,
   redTeamTotalCards,
   blueTeamScore,
@@ -47,7 +49,7 @@ const Gameboard = ({
       <div className="timer-section-container">
         <div style={{textAlign: 'right', padding: 10}}>
           {role === "spymaster" && <button className="btn btn-secondary mr-1" onClick={() => setShowColours(!showColours)}>{showColours ? 'Hide' : 'Show'} Colours</button>}
-          <button className="btn btn-secondary" onClick={() => handleNewGame()}>New Game</button>
+          {gameState === "started" && <button className="btn btn-secondary" onClick={() => handleEndTurn({ activeTeam, team: yourTeam })}>End Turn</button>}
         </div>
 
         <Timer classValue={"_timer-container"} startedAt={Date.now()} expiresAt={Date.now() + (2 * 60 * 1000)} />
