@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Button from '../Button';
 import Card from '../card';
 import Scorebar from '../scorebar';
 import Timer from '../timer';
@@ -103,6 +104,32 @@ const Gameboard = ({
         players={players.filter(p => p.team === "blue")}
         spymaster={players.filter(p => p.team === "blue" && p.role === "spymaster").map(p => p.username || p.user_id).join(" and ")}
         />
+    </div>
+
+    <div className="footer-controls-wrapper mt-5">
+      <Button
+        type={yourTeam === "red" && role === "spymaster" ? "red" : null}
+        className="mr-2"
+      >
+        Spymaster
+      </Button>
+
+      <Button type={yourTeam === "red" && role === "player" ? "red" : null}>
+        Player
+      </Button>
+
+      <img className="mx-2" src="/switch-logo.svg" />
+
+      <Button
+        type={yourTeam === "blue" && role === "spymaster" ? "blue" : null}
+        className="mr-2"
+      >
+        Player
+      </Button>
+
+      <Button type={yourTeam === "blue" && role === "player" ? "blue" : null}>
+        Spymaster
+      </Button>
     </div>
   </div>
 );
