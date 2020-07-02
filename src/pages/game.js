@@ -32,15 +32,11 @@ const Game = ({
 }) => (
   <div className="text-center">
     <Link to="/"><h1>C O D E N A M E S</h1></Link>
+
     <div className={`mx-3 text-${gameState === 'started' ? 'left' : 'right'}`}>
-      {process.env.NODE_ENV !== "development" && <span><button onClick={() => handleNewRoom()}>Sign Into Room</button>
-      <button onClick={() => handleJoinRoom()}>Join Room</button>
-      <button onClick={() => handleNewGame()}>New Game</button>
-      <button onClick={() => handleTeamSelection("red")}>I am red!</button>
-      <button onClick={() => handleTeamSelection("blue")}>I am blue!</button>
-      <button onClick={() => handleGameAction(2)}>Take action!</button></span>}
       <button className="btn btn-secondary" onClick={() => handleNewGame()}>New Game</button>
     </div>
+
     <Gameboard
       activeTeam={activeTeam}
       yourTeam={team}
