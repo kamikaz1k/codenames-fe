@@ -282,7 +282,7 @@ class App extends React.Component {
 
     if (activeTeam !== team) this.toast("It's not your team's turn!");
 
-    if (MOCK_BACKEND) this.setState({ activeTeam: activeTeam === 'red' ? 'blue' : 'red' });
+    if (MOCK_BACKEND) return this.setState({ activeTeam: activeTeam === 'red' ? 'blue' : 'red' });
     this.state.channel.push("game_action", { endTurn: true });
   }
 

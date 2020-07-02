@@ -39,9 +39,7 @@ const Gameboard = ({
   words,
   yourTeam
 }) => (
-  <div>
-    <Link to="/"><h1>C O D E N A M E S</h1></Link>
-
+  <div className="gameboard-subpage">
     <h2 style={turnIndicatorStyle(activeTeam)}>{activeTeam === yourTeam ? 'Your Team' : prettyTeamName[activeTeam]}'s Turn</h2>
 
     <div className={"timer-section-wrapper"}>
