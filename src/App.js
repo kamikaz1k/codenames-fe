@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 // import logo from './logo.svg';
 import './App.css';
+import MainPage from './pages/MainPage';
 import GamePage from './pages/game';
 import CreateRoomPage from './pages/create-room';
 import ShareRoomPage from './pages/ShareRoomPage';
@@ -295,16 +296,7 @@ class App extends React.Component {
         {DEBUG && <div>Player: {JSON.stringify({ userId: this.state.userId, username: this.state.username, roomId: this.state.roomId, roomName: this.state.roomName, team: this.state.team, role: this.state.role })}</div>}
         <Switch>
           <Route exact path="/">
-            <div className="container center">
-              <h1>C O D E N A M E S</h1>
-              <Link to="/create-room">
-                <button className="btn btn-secondary">Create a Room</button>
-              </Link>
-              <span style={{padding: 5}}></span>
-              <Link to="/game">
-                <button className="btn btn-secondary">Enter a Room</button>
-              </Link>
-            </div>
+            <MainPage />
           </Route>
 
           <Route path="/create-room">
