@@ -1,7 +1,4 @@
 import React from 'react';
-import {
-  Link
-} from "react-router-dom";
 
 import colours from '../utils/colours';
 
@@ -16,9 +13,9 @@ const styleForType = (type) => ({
   border: 'none'
 });
 
-const Button = ({ className, children, type }) => {
+const Button = ({ className, children, onClick, type }) => {
   return (
-    <button className={`btn btn-secondary ${className}`} style={styleForType(type)}>
+    <button className={`btn btn-secondary ${className}`} onClick={onClick} style={styleForType(type)}>
       {children}
     </button>
   );
