@@ -17,6 +17,8 @@ const Game = ({
   room,
   showColours,
   team,
+  userId,
+  username,
   words,
   handleNewRoom,
   handleJoinRoom,
@@ -25,6 +27,7 @@ const Game = ({
   handleGameAction,
   handleSelectWord,
   handleEndTurn,
+  handleUpdatePlayer,
   setShowColours
 }) => (
   <div className="text-center">
@@ -50,10 +53,12 @@ const Game = ({
       handleSelectWord={handleSelectWord}
       handleNewGame={handleNewGame}
       handleEndTurn={handleEndTurn}
+      handleUpdatePlayer={handleUpdatePlayer}
       words={words.map(w => ({ ...w, isRevealed: showColours ? true : w.isRevealed }))}
       role={role}
       setShowColours={setShowColours}
-      showColours={showColours} />
+      showColours={showColours}
+      username={username} />
   </div>
 );
 

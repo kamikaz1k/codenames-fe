@@ -351,12 +351,15 @@ class App extends React.Component {
                   room={this.state.room}
                   showColours={this.state.showColours}
                   team={this.state.team}
+                  userId={this.state.userId}
+                  username={this.state.username}
                   words={this.state.words}
                   handleEndTurn={this.handleEndTurn}
                   handleNewRoom={this.handleNewRoom}
                   handleJoinRoom={this.handleJoinRoom}
                   handleNewGame={this.handleNewGame}
                   handleTeamSelection={this.handleTeamSelection}
+                  handleUpdatePlayer={this.handleUpdatePlayer}
                   handleGameAction={this.handleGameAction}
                   handleSelectWord={this.handleSelectWord}
                   setShowColours={this.setShowColours}
