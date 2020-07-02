@@ -132,7 +132,7 @@ const Gameboard = ({
         }
 
         <button className="btn btn-clear" onClick={() => setShowSwitchButtons(!showSwitchButtons)}>
-          <img className="mx-2" src="/switch-logo.svg" />
+          <img alt="switch teams or roles" className="mx-2" src="/switch-logo.svg" />
         </button>
 
         {showSwitchButtons &&
