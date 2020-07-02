@@ -4,14 +4,13 @@ import {
 } from "react-router-dom";
 
 import Button from '../components/Button';
-import colours from '../utils/colours';
 
 const MainPage = () => {
   return (
     <div className="container container-slim text-center">
       <h1>C O D E N A M E S</h1>
       <div>
-        <img src="/cityscapes-downtown.svg" />
+        <img width="336" height="227" alt="cityscapes downtown" src="/cityscapes-downtown.svg" />
       </div>
 
       <div>
