@@ -1,7 +1,4 @@
 import React from 'react';
-import {
-  Link
-} from "react-router-dom";
 
 import Card from '../card';
 import Scorebar from '../scorebar';
@@ -40,17 +37,34 @@ const Gameboard = ({
   yourTeam
 }) => (
   <div className="gameboard-subpage">
-    <h2 style={turnIndicatorStyle(activeTeam)}>{activeTeam === yourTeam ? 'Your Team' : prettyTeamName[activeTeam]}'s Turn</h2>
 
     <div className={"timer-section-wrapper"}>
 
       <div className="timer-section-container">
-        <div style={{textAlign: 'right', padding: 10}}>
-          {role === "spymaster" && <button className="btn btn-secondary mr-1" onClick={() => setShowColours(!showColours)}>{showColours ? 'Hide' : 'Show'} Colours</button>}
-          {gameState === "started" && <button className="btn btn-secondary" onClick={() => handleEndTurn({ activeTeam, team: yourTeam })}>End Turn</button>}
+        <div style={{display: 'flex', justifyContent: 'space-between', margin: '0 1rem'}}>
+          {gameState === "started" &&
+            <button
+              className="btn btn-secondary"
+              style={{visibility: role === "spymaster" ? null : 'hidden'}}
+              onClick={() => setShowColours(!showColours)}
+            >
+              {showColours ? 'Hide Colours' : 'Show Colours'}
+            </button>
+          }
+
+          <h2 style={turnIndicatorStyle(activeTeam)}>{activeTeam === yourTeam ? 'Your Team' : prettyTeamName[activeTeam]}'s Turn</h2>
+
+          {gameState === "started" &&
+            <button
+              className="btn btn-secondary"
+              onClick={() => handleEndTurn({ activeTeam, team: yourTeam })}
+            >
+              End Turn
+            </button>
+          }
         </div>
 
-        <Timer classValue={"_timer-container"} startedAt={Date.now()} expiresAt={Date.now() + (2 * 60 * 1000)} />
+        <Timer classValue="mt-4" startedAt={Date.now()} expiresAt={Date.now() + (2 * 60 * 1000)} />
       </div>
     </div>
 
