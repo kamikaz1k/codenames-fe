@@ -4,18 +4,18 @@ import colours from '../utils/colours';
 
 const useLighterContrast = ["red", "darkRed"];
 
-const styleForType = (type) => ({
+const styleForType = (type, bigSize) => ({
   fontWeight: 'bold',
-  minHeight: 60,
-  minWidth: 130,
+  minHeight: bigSize ? 60 : null,
+  minWidth: bigSize ? 130 : null,
   backgroundColor: colours[type],
   color: type ? (useLighterContrast.includes(type) ? colours.offWhite : colours.offBlack) : null,
   border: 'none'
 });
 
-const Button = ({ className, children, onClick, type }) => {
+const Button = ({ className, children, onClick, type, bigSize = false }) => {
   return (
-    <button className={`btn btn-secondary ${className}`} onClick={onClick} style={styleForType(type)}>
+    <button className={`btn btn-secondary ${className}`} onClick={onClick} style={styleForType(type, bigSize)}>
       {children}
     </button>
   );

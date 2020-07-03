@@ -6,9 +6,11 @@ import Scorebar from '../scorebar';
 import Timer from '../timer';
 import './Gameboard.css'
 
+import colours from '../../utils/colours';
+
 const colourForTeam = (team) => ({
-  red: "#CD3B49",
-  blue: "#80C2FF"
+  red: colours.red,
+  blue: colours.blue
 }[team]);
 
 const prettyTeamName = {
@@ -115,6 +117,7 @@ const Gameboard = ({
         {showSwitchButtons &&
           <span>
             <Button
+              bigSize
             onClick={() => handleUpdatePlayer({ team: "red", role: "spymaster", username })}
             type={yourTeam === "red" && role === "spymaster" ? "red" : null}
             className="mr-2"
@@ -123,6 +126,7 @@ const Gameboard = ({
             </Button>
 
             <Button
+              bigSize
               onClick={() => handleUpdatePlayer({ team: "red", role: "player", username })}
               type={yourTeam === "red" && role === "player" ? "red" : null}
             >
@@ -138,6 +142,7 @@ const Gameboard = ({
         {showSwitchButtons &&
           <span>
             <Button
+              bigSize
               onClick={() => handleUpdatePlayer({ team: "blue", role: "spymaster", username })}
               type={yourTeam === "blue" && role === "spymaster" ? "blue" : null}
               className="mr-2"
@@ -146,6 +151,7 @@ const Gameboard = ({
             </Button>
 
             <Button
+              bigSize
               onClick={() => handleUpdatePlayer({ team: "blue", role: "player", username })}
               type={yourTeam === "blue" && role === "player" ? "blue" : null}
             >
