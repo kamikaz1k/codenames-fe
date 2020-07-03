@@ -3,6 +3,80 @@ import {
   Redirect
 } from "react-router-dom";
 
+import Button from '../components/Button';
+
+const chooseRandomly = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+const generateRandomRoomName = () => `${chooseRandomly(roomSynonyms)} for ${chooseRandomly(adjectives)} ${chooseRandomly(nouns)}`;
+
+const adjectives = [
+  "wasteful",
+  "godly",
+  "cheerful",
+  "innocent",
+  "helpful",
+  "unknown",
+  "clever",
+  "bashful",
+  "boring",
+  "beautiful",
+  "sharp",
+  "ethereal"
+];
+
+const nouns = [
+  "underwear",
+  "frogs",
+  "vegetable",
+  "eggnog",
+  "notebook",
+  "nation",
+  "snake",
+  "kitty",
+  "cemetery",
+  "knowledge",
+  "knee",
+  "science"
+];
+
+const roomSynonyms = [
+  "area",
+  "place",
+  "clearance",
+  "compass",
+  "expanse",
+  "margin",
+  "opening",
+  "opportunity",
+  "play",
+  "range",
+  "reach",
+  "scope",
+  "territory",
+  "vastness",
+  "volume",
+  "elbowroom",
+  "accommodation",
+  "apartment",
+  "cabin",
+  "cave",
+  "chamber",
+  "cubicle",
+  "den",
+  "lodging",
+  "office",
+  "suite",
+  "alcove",
+  "cubbyhole",
+  "flat",
+  "flop",
+  "joint",
+  "niche",
+  "setup",
+  "turf",
+  "vault"
+];
+
 const CreateRoomPage = ({
   roomId,
   roomName,
@@ -30,18 +104,18 @@ const CreateRoomPage = ({
             />
 
             <div className="input-group-append">
-              <div className="btn btn-primary disabled">Random</div>
+              <Button type="neutral" onClick={() => setRoomname(generateRandomRoomName())}>Random</Button>
             </div>
           </div>
           <small id="roomnameHelp" className="form-text text-muted">minimum of 6 characters</small>
         </div>
 
-        <button
-          type="button"
-          className={`btn btn-secondary ${componentRoomName ? '' : 'disabled'}`}
+        <Button
+          type="yellowOrange"
+          className={componentRoomName ? '' : 'disabled'}
           onClick={() => componentRoomName && handleCreateRoom(componentRoomName)}>
           Create a Room
-        </button>
+        </Button>
       </form>
     </div>
   );
