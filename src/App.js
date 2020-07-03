@@ -307,7 +307,7 @@ class App extends React.Component {
   render() {
     return (
       <Router basename={BASENAME}>
-        {DEBUG && <div>Player: {JSON.stringify({ userId: this.state.userId, username: this.state.username, roomId: this.state.roomId, roomName: this.state.roomName, team: this.state.team, role: this.state.role })}</div>}
+        {DEBUG && <div style={{textAlign: 'center', lineBreak: 'anywhere'}}>{JSON.stringify({ userId: this.state.userId, username: this.state.username, roomId: this.state.roomId, roomName: this.state.roomName, team: this.state.team, role: this.state.role })}</div>}
         <Switch>
           <Route exact path="/">
             <MainPage />

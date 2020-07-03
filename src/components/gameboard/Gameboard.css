@@ -40,3 +40,17 @@
 .timer-section-container {
   grid-area: timer-section-container;
 }
+
+/* FOR MOBILE */
+@media (max-width: 600px) {
+  .wrapper {
+    display: grid;
+    grid-gap: 20px;
+    margin: 0 0.5em;
+    grid-template-columns: unset;
+    grid-template-areas:
+      "gameboard"
+      "left-sidebar"
+      "right-sidebar";
+  }
+}
