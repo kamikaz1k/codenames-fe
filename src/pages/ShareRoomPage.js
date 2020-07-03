@@ -3,6 +3,8 @@ import {
   Link
 } from "react-router-dom";
 
+import Button from '../components/Button';
+
 const shareLink = (roomId) => {
   return `${new URL(window.location.href).origin}/join-room?roomId=${roomId}`
 };
@@ -36,14 +38,16 @@ const ShareRoomPage = ({ roomId, roomName }) => {
         />
 
         <div className="input-group-append">
-          <div className="btn btn-primary" onClick={e => copyLinktoClipboard(e, linkTextRef, setCopyState)}>Copy</div>
+          <Button type="neutral" onClick={e => copyLinktoClipboard(e, linkTextRef, setCopyState)}>
+            Copy
+          </Button>
         </div>
 
       </div>
       <small id="roomShareHelp" className="form-text text-muted">{copiedStateMsg + "Share the link with your friends!"}</small>
 
       <Link to={`/join-room?roomId=${roomId}`}>
-        <button type="button" className="btn btn-secondary mt-4">Open Room</button>
+        <Button type="yellowOrange" className="mt-4">Open Room</Button>
       </Link>
     </div>
   );

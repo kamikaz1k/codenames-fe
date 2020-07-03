@@ -4,6 +4,8 @@ import {
   useLocation
 } from "react-router-dom";
 
+import Button from '../components/Button';
+
 const useQuery = () => new URLSearchParams(useLocation().search);
 
 const JoinRoomPage = ({
@@ -41,12 +43,12 @@ const JoinRoomPage = ({
           <small id="roomJoinHelp" className="form-text text-muted">Type in the Room ID</small>
         </div>
 
-        <button
-          type="button"
-          className={`btn btn-secondary ${componentRoomId ? '' : 'disabled'}`}
+        <Button
+          type="neutral"
+          className={componentRoomId ? '' : 'disabled'}
           onClick={() => componentRoomId && handleJoinRoom(componentRoomId)}>
           Join Room #{componentRoomId}
-        </button>
+        </Button>
       </form>
     </div>
   );
