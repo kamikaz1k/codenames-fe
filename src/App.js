@@ -191,10 +191,21 @@ class App extends React.Component {
     if (MOCK_BACKEND) return this.setState({ roomId, roomName });
 
     if (this.state.channel.topic === LOBBY) {
-      console.log("closing lobby channel", this.state.channel);
-      this.state.channel.leave();
 
-      this.setupRoomChannel(this.state.socket, roomId);
+      this.state.channel.push("check_room_id", {room_id: roomId })
+        .receive("ok", response => {
+          console.log(`[${Date()}] check_room_id OK: ${JSON.stringify(response)}`);
+
+          if (this.state.channel.topic !== LOBBY) return;
+          console.log("closing lobby channel", this.state.channel);
+          this.state.channel.leave();
+
+          this.setupRoomChannel(this.state.socket, roomId);
+        })
+        .receive("error", resp => {
+          console.log(`[${Date()}] check_room_id ERROR: ${JSON.stringify(resp)}`);
+          this.toast(resp.message);
+        });
     }
   }
 
