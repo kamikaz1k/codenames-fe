@@ -352,7 +352,7 @@ class App extends React.Component {
 
           <Route path="/game">
             {!this.state.roomId
-              ? <Redirect to="/join-room" />
+              ? <Redirect to={`/join-room?roomId=${new URLSearchParams(window.location.search).get("roomId") || ""}`} />
               : <GamePage
                   activeTeam={this.state.activeTeam}
                   blueTeamScore={this.state.blueTeamScore}

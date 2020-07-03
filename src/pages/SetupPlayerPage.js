@@ -23,7 +23,7 @@ const SetupPlayerPage = ({
   const [componentTeam, setComponentTeam] = useState(team || "");
   const [componentRole, setComponentRole] = useState(role || "");
 
-  if (userId && username && roomId && team && role) return <Redirect to="/game" />;
+  if (userId && username && roomId && team && role) return <Redirect to={`/game?roomId=${roomId}`} />;
 
   return (
     <div className="setup-player-page container container-slim">
