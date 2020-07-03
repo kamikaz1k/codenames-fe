@@ -3,7 +3,9 @@ import {
   Link
 } from "react-router-dom";
 
+import WinnerModal from '../components/WinnerModal';
 import Gameboard from '../components/gameboard';
+
 
 const Game = ({
   activeTeam,
@@ -16,10 +18,12 @@ const Game = ({
   role,
   room,
   showColours,
+  showWinnerModal,
   team,
   userId,
   username,
   words,
+  handleCloseWinnerModal,
   handleNewRoom,
   handleJoinRoom,
   handleNewGame,
@@ -55,6 +59,13 @@ const Game = ({
       setShowColours={setShowColours}
       showColours={showColours}
       username={username} />
+
+    <WinnerModal
+      isOpen={showWinnerModal}
+      closeModal={() => handleCloseWinnerModal()}
+      handleNewGame={handleNewGame}
+      losingTeam={losingTeam}
+      winningTeam={losingTeam === "red" ? "blue" : "red"} />
   </div>
 );
 

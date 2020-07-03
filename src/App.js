@@ -56,6 +56,7 @@ class App extends React.Component {
     blueTeamScore: 0,
     blueTeamTotalCards: 0,
     showColours: false,
+    showWinnerModal: false,
   }, MOCK_BACKEND ? dummyData : {})
 
   toast = (msg, isError = true) => {
@@ -149,6 +150,8 @@ class App extends React.Component {
         red_score,
       } = payload.body;
 
+      const showWinnerModal = !!losing_team;
+
       this.setState({
         words: words,
         activeTeam: active_team,
@@ -157,7 +160,8 @@ class App extends React.Component {
         redTeamScore: red_score,
         blueTeamScore: blue_score,
         losingTeam: losing_team,
-        gameState: state
+        gameState: state,
+        showWinnerModal
       });
     });
 
@@ -220,16 +224,20 @@ class App extends React.Component {
 
       const word = prevState.words.find(w => w.id === cardId);
       let gameState = prevState.state;
+      let showWinnerModal = prevState.showWinnerModal;
+      let losingTeam = prevState.losingTeam;
 
       if (word.isRevealed) return prevState;
 
-      if (word.isDoubleAgent) {
-        setTimeout(() => window.alert(`${activeTeam} Loses!`), 500);
-        gameState = "over";
-      }
-
       const activeTeam = prevState.activeTeam;
       let newActiveTeam = activeTeam;
+
+      if (word.isDoubleAgent) {
+        gameState = "over";
+        showWinnerModal = true;
+        losingTeam = activeTeam;
+      }
+
       if (word.team && word.team !== activeTeam) {
         console.log("### You picked the other team's card!", activeTeam, word);
         newActiveTeam = activeTeam === RED_TEAM ? BLUE_TEAM : RED_TEAM;
@@ -249,7 +257,9 @@ class App extends React.Component {
         redTeamScore: newState.words.reduce((acc, curr) => (curr.isRevealed && curr.team === RED_TEAM) ? acc + 1 : acc, 0),
         blueTeamScore: newState.words.reduce((acc, curr) => (curr.isRevealed && curr.team === BLUE_TEAM) ? acc + 1 : acc, 0),
         activeTeam: newActiveTeam,
-        gameState
+        gameState,
+        losingTeam,
+        showWinnerModal
       });
     });
   }
@@ -284,6 +294,10 @@ class App extends React.Component {
 
     if (MOCK_BACKEND) return this.setState({ activeTeam: activeTeam === 'red' ? 'blue' : 'red' });
     this.state.channel.push("game_action", { endTurn: true });
+  }
+
+  handleCloseWinnerModal = () => {
+    this.setState({ showWinnerModal: false });
   }
 
   setShowColours = (showColours) => {
@@ -350,10 +364,12 @@ class App extends React.Component {
                   role={this.state.role}
                   room={this.state.room}
                   showColours={this.state.showColours}
+                  showWinnerModal={this.state.showWinnerModal}
                   team={this.state.team}
                   userId={this.state.userId}
                   username={this.state.username}
                   words={this.state.words}
+                  handleCloseWinnerModal={this.handleCloseWinnerModal}
                   handleEndTurn={this.handleEndTurn}
                   handleNewRoom={this.handleNewRoom}
                   handleJoinRoom={this.handleJoinRoom}
