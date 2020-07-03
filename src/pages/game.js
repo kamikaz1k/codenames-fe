@@ -58,6 +58,7 @@ const Game = ({
       role={role}
       setShowColours={setShowColours}
       showColours={showColours}
+      userId={userId}
       username={username} />
 
     <WinnerModal

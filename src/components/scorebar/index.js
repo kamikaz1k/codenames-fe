@@ -49,7 +49,9 @@ const Scorebar = ({
       <h3 style={{color: colourForTeam(team)}}>Players</h3>
       <div>
         {players.map((player, idx) =>
-          <p className="mb-0" key={idx}>{player.username || `(id: ${player.user_id})`}</p>)
+          <p className="mb-0" key={idx}>
+            {player.username || `(id: ${player.user_id})`}{player.isYou ? " (you)" : ""}
+          </p>)
         }
       </div>
     </div>
