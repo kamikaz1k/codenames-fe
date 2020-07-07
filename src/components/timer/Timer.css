@@ -3,6 +3,10 @@
   color: #4A4A4A;;
 }
 
+.timer-icon-section {
+  cursor: pointer;
+}
+
 .icon {
   font-size: 42px;
   padding: 10px 10px 10px 0;

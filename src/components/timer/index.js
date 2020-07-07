@@ -68,7 +68,7 @@ class Timer extends React.Component {
 
     return (
       <div className={`${this.props.classValue} timer-component`}>
-        <div className="p-1 pr-4">
+        <div className="p-1 pr-4 timer-icon-section">
           <small style={{visibility: timerIsRunning ? 'hidden' : null}}>2:00</small>
           <i className={"icon ion-icon ion-android-stopwatch p-0"} onClick={() => this.props.handleStartTimer()} />
           <small>{timerIsRunning ? 'ON' : 'OFF'}</small>
