@@ -315,9 +315,10 @@ class App extends React.Component {
   }
 
   handleStartTimer = () => {
-    console.log("handleStartTimer");
+    if (this.state.team === this.state.activeTeam) return this.toast("It is your team's turn!");
+
     if (MOCK_BACKEND) return this.setState({ timerStartedAt: Date.now() });
-    this.state.channel.push("start_timer");
+    this.state.channel.push("game_action", { action: "start_timer" });
   }
 
   setShowColours = (showColours) => {
