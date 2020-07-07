@@ -49,6 +49,7 @@ class App extends React.Component {
     role: null,
     words: [],
     gameState: null,
+    timerStartedAt: null,
     losingTeam: null,
     activeTeam: "red",
     redTeamScore: 0,
@@ -148,6 +149,7 @@ class App extends React.Component {
         red_total,
         blue_score,
         red_score,
+        timer_started_at
       } = payload.body;
 
       const showWinnerModal = !!losing_team;
@@ -161,6 +163,7 @@ class App extends React.Component {
         blueTeamScore: blue_score,
         losingTeam: losing_team,
         gameState: state,
+        timerStartedAt: timer_started_at,
         showWinnerModal
       });
     });
@@ -311,6 +314,12 @@ class App extends React.Component {
     this.setState({ showWinnerModal: false });
   }
 
+  handleStartTimer = () => {
+    console.log("handleStartTimer");
+    if (MOCK_BACKEND) return this.setState({ timerStartedAt: Date.now() });
+    this.state.channel.push("start_timer");
+  }
+
   setShowColours = (showColours) => {
     this.setState({ showColours });
   }
@@ -318,7 +327,7 @@ class App extends React.Component {
   render() {
     return (
       <Router basename={BASENAME}>
-        {DEBUG && <div style={{textAlign: 'center', lineBreak: 'anywhere'}}>{JSON.stringify({ userId: this.state.userId, username: this.state.username, roomId: this.state.roomId, roomName: this.state.roomName, team: this.state.team, role: this.state.role })}</div>}
+        {DEBUG && <div style={{textAlign: 'center', lineBreak: 'anywhere'}}>{JSON.stringify({ userId: this.state.userId, username: this.state.username, roomId: this.state.roomId, roomName: this.state.roomName, team: this.state.team, role: this.state.role, timerStartedAt:  this.state.timerStartedAt })}</div>}
         <Switch>
           <Route exact path="/">
             <MainPage />
@@ -377,6 +386,7 @@ class App extends React.Component {
                   showColours={this.state.showColours}
                   showWinnerModal={this.state.showWinnerModal}
                   team={this.state.team}
+                  timerStartedAt={this.state.timerStartedAt}
                   userId={this.state.userId}
                   username={this.state.username}
                   words={this.state.words}
@@ -385,6 +395,7 @@ class App extends React.Component {
                   handleNewRoom={this.handleNewRoom}
                   handleJoinRoom={this.handleJoinRoom}
                   handleNewGame={this.handleNewGame}
+                  handleStartTimer={this.handleStartTimer}
                   handleTeamSelection={this.handleTeamSelection}
                   handleUpdatePlayer={this.handleUpdatePlayer}
                   handleGameAction={this.handleGameAction}

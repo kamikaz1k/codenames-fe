@@ -1,7 +1,6 @@
 .timer-component {
   display: flex;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  color: #4A4A4A;;
 }
 
 .icon {
@@ -15,13 +14,23 @@
 .progress-bar-content {
   padding-top: 10px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .progress {
   height: 8px;
+  width: 100%;
   border-radius: 0px;
+  background-color: #D7D7D7;
 }
 
 .progress-bar {
-  background-color: black;
+  background-color: #4A4A4A;
+}
+
+.progress-bar-value {
+  position: absolute;
+  padding-bottom: 28px;
 }

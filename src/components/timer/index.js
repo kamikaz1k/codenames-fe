@@ -2,10 +2,10 @@ import React from 'react'
 import './Timer.css';
 
 const timeOut = {
-  percentRemaining:0,
-  total:0,
-  minutes:0,
-  seconds:0
+  percentRemaining: 0,
+  total: 0,
+  minutes: 0,
+  seconds: 0
 };
 
 const getTimeRemaining = (expiresAt, startedAt) => {
@@ -50,15 +50,12 @@ class Timer extends React.Component {
 
     const timeLeft = getTimeRemaining(this.props.expiresAt, this.props.startedAt);
 
+    const nextTick = () => setTimeout(() => { this.frameId = requestAnimationFrame(this.tick) }, 1000 / 12);
+
     if (timeLeft.total <= 0) {
-      this.stop()
-      this.setState({ timeLeft: timeOut });
-      // ...any other actions to do on expiration
+      this.setState({ timeLeft: timeOut }, nextTick);
     } else {
-      this.setState(
-        { timeLeft },
-        () => setTimeout(() => { this.frameId = requestAnimationFrame(this.tick) }, 1000 / 12)
-      )
+      this.setState({ timeLeft }, nextTick);
     }
   }
 
@@ -67,15 +64,23 @@ class Timer extends React.Component {
   }
 
   render() {
+    const timerIsRunning = this.state.timeLeft.percentRemaining > 0;
+
     return (
       <div className={`${this.props.classValue} timer-component`}>
-        <i className={"icon ion-icon ion-android-stopwatch"} />
-        <div className={"progress-bar-content"}>
-          <div style={{textAlign: "left"}}>{formatTime(this.state.timeLeft)}</div>
-            <div className="progress">
-              <div className="progress-bar" role="progressbar" style={{width: `${this.state.timeLeft.percentRemaining}%`}} aria-valuenow={this.state.timeLeft.percentRemaining} aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
+        <div className="p-1 pr-4">
+          <small style={{visibility: timerIsRunning ? 'hidden' : null}}>2:00</small>
+          <i className={"icon ion-icon ion-android-stopwatch p-0"} onClick={() => this.props.handleStartTimer()} />
+          <small>{timerIsRunning ? 'ON' : 'OFF'}</small>
         </div>
+        {timerIsRunning &&
+          <div className={"progress-bar-content"}>
+            <div className="progress-bar-value">{formatTime(this.state.timeLeft)}</div>
+              <div className="progress">
+                <div className="progress-bar" role="progressbar" style={{width: `${this.state.timeLeft.percentRemaining}%`}} aria-valuenow={this.state.timeLeft.percentRemaining} aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+          </div>
+        }
       </div>
     );
   }

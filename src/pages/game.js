@@ -20,6 +20,7 @@ const Game = ({
   showColours,
   showWinnerModal,
   team,
+  timerStartedAt,
   userId,
   username,
   words,
@@ -30,6 +31,7 @@ const Game = ({
   handleTeamSelection,
   handleGameAction,
   handleSelectWord,
+  handleStartTimer,
   handleEndTurn,
   handleUpdatePlayer,
   setShowColours
@@ -53,10 +55,12 @@ const Game = ({
       handleSelectWord={handleSelectWord}
       handleNewGame={handleNewGame}
       handleEndTurn={handleEndTurn}
+      handleStartTimer={handleStartTimer}
       handleUpdatePlayer={handleUpdatePlayer}
       words={words.map(w => ({ ...w, isRevealed: showColours ? true : w.isRevealed }))}
       role={role}
       setShowColours={setShowColours}
+      timerStartedAt={timerStartedAt}
       showColours={showColours}
       userId={userId}
       username={username} />

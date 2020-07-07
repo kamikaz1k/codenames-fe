@@ -28,6 +28,7 @@ const Gameboard = ({
   handleSelectWord,
   handleNewGame,
   handleEndTurn,
+  handleStartTimer,
   handleUpdatePlayer,
   redTeamScore,
   redTeamTotalCards,
@@ -37,6 +38,7 @@ const Gameboard = ({
   role,
   setShowColours,
   showColours,
+  timerStartedAt,
   userId,
   username,
   words,
@@ -73,7 +75,11 @@ const Gameboard = ({
             }
           </div>
 
-          <Timer classValue="mt-4" startedAt={Date.now()} expiresAt={Date.now() + (2 * 60 * 1000)} />
+          <Timer
+            classValue="mt-4"
+            handleStartTimer={handleStartTimer}
+            startedAt={timerStartedAt}
+            expiresAt={timerStartedAt + (2 * 60 * 1000)} />
         </div>
       </div>
 
