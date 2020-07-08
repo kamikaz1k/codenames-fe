@@ -19,6 +19,8 @@ import ShareRoomPage from './pages/ShareRoomPage';
 import JoinRoomPage from './pages/JoinRoomPage';
 import SetupPlayerPage from './pages/SetupPlayerPage';
 
+import ChatWidget from './components/ChatWidget';
+
 import dummyData from './lib/dummy';
 import packageJson from '../package.json';
 
@@ -58,6 +60,7 @@ class App extends React.Component {
     blueTeamTotalCards: 0,
     showColours: false,
     showWinnerModal: false,
+    chatMessages: []
   }, MOCK_BACKEND ? dummyData : {})
 
   toast = (msg, isError = true) => {
@@ -325,6 +328,12 @@ class App extends React.Component {
     this.setState({ showColours });
   }
 
+  handleNewChatMessage = (value, oldMessages, callback) => {
+    this.setState({
+      chatMessages: [...oldMessages, value]
+    }, callback);
+  }
+
   render() {
     return (
       <Router basename={BASENAME}>
@@ -421,6 +430,8 @@ class App extends React.Component {
           closeOnClick={true}
           closeButton={false}
           transition={Slide} />
+
+        <ChatWidget chatMessages={this.state.chatMessages} handleNewChatMessage={this.handleNewChatMessage} />
       </Router>
     );
   }
