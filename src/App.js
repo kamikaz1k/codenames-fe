@@ -328,9 +328,10 @@ class App extends React.Component {
     this.setState({ showColours });
   }
 
-  handleNewChatMessage = (value, oldMessages, callback) => {
+  handleNewChatMessage = (message, oldMessages, callback) => {
+    const { userId } = this.state;
     this.setState({
-      chatMessages: [...oldMessages, value]
+      chatMessages: [...oldMessages, { user_id: userId, message }]
     }, callback);
   }
 
@@ -431,7 +432,13 @@ class App extends React.Component {
           closeButton={false}
           transition={Slide} />
 
-        <ChatWidget chatMessages={this.state.chatMessages} handleNewChatMessage={this.handleNewChatMessage} />
+        {this.state.room &&
+          <ChatWidget
+            you={this.state.userId}
+            groupMembers={this.state.room.players}
+            chatMessages={this.state.chatMessages}
+            handleNewChatMessage={this.handleNewChatMessage} />
+        }
       </Router>
     );
   }

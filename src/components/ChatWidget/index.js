@@ -2,8 +2,16 @@ import React, { useState } from 'react';
 
 import './ChatWidget.css';
 
-const ChatWidget = ({ chatMessages, handleNewChatMessage }) => {
+const ChatWidget = ({ chatMessages, handleNewChatMessage, groupMembers, you }) => {
   const [showChatModal, setShowChatModal] = useState(false);
+  const players = groupMembers.reduce((acc, curr) =>
+    ({
+      ...acc,
+      [curr.user_id]: curr.user_id === you ? "You" : curr.username
+    })
+  , {});
+
+  console.log(groupMembers, players);
 
   return (
     <div className="chat-container">
@@ -16,7 +24,7 @@ const ChatWidget = ({ chatMessages, handleNewChatMessage }) => {
             <i className="close-btn icon ion-icon ion-close" onClick={() => setShowChatModal(!showChatModal)} />
           </div>
           <div className="messages">
-            {chatMessages.map((v, idx) => <div key={idx} className="message-entry">{v}</div>)}
+            {chatMessages.map((v, idx) => <div key={idx} className="message-entry">{`${players[v.user_id]}: ${v.message}`}</div>)}
           </div>
           <input
             autoFocus
