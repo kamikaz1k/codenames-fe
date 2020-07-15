@@ -6,7 +6,10 @@ const ChatWidget = ({ chatMessages, handleNewChatMessage }) => {
   const [showChatModal, setShowChatModal] = useState(false);
 
   return (
-    <div className="fab-chat">
+    <div className="chat-container">
+      <div className="fab-chat">
+        <i className="icon ion-icon ion-chatboxes p-1" onClick={() => setShowChatModal(!showChatModal)} />
+      </div>
       {showChatModal &&
         <div className="chat-window">
           <div className="messages">
@@ -32,7 +35,6 @@ const ChatWidget = ({ chatMessages, handleNewChatMessage }) => {
           />
         </div>
       }
-      <i className="icon ion-icon ion-chatboxes p-1" onClick={() => setShowChatModal(!showChatModal)} />
     </div>
   );
 }
