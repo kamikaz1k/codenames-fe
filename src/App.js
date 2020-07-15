@@ -171,11 +171,22 @@ class App extends React.Component {
       });
     });
 
-    channel.on("room_update", payload =>{
+    channel.on("room_update", payload => {
       console.log(`[${Date()}] room_update: ${JSON.stringify(payload.room)}`, payload.room);
 
       const { room = {} } = payload;
       this.setState({ room });
+    });
+
+    channel.on("chat_message", payload => {
+      console.log(`[${Date()}] chat_message: ${JSON.stringify(payload.message)}`, payload.message);
+
+      const { user_id, message } = payload;
+
+      this.setState(prevState => ({
+        ...prevState,
+        chatMessages: [...prevState.chatMessages, { user_id, message }]
+      }));
     });
 
     channel.join()
@@ -330,9 +341,12 @@ class App extends React.Component {
 
   handleNewChatMessage = (message, oldMessages, callback) => {
     const { userId } = this.state;
-    this.setState({
+    if (MOCK_BACKEND) return this.setState({
       chatMessages: [...oldMessages, { user_id: userId, message }]
     }, callback);
+
+    this.state.channel.push("new_chat_msg", { message });
+    callback();
   }
 
   render() {
@@ -432,7 +446,7 @@ class App extends React.Component {
           closeButton={false}
           transition={Slide} />
 
-        {this.state.room &&
+        {this.state.room.players &&
           <ChatWidget
             you={this.state.userId}
             groupMembers={this.state.room.players}
