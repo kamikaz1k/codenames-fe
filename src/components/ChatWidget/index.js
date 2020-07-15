@@ -12,6 +12,9 @@ const ChatWidget = ({ chatMessages, handleNewChatMessage }) => {
       </div>
       {showChatModal &&
         <div className="chat-window">
+          <div className="controls text-right">
+            <i className="close-btn icon ion-icon ion-close" onClick={() => setShowChatModal(!showChatModal)} />
+          </div>
           <div className="messages">
             {chatMessages.map((v, idx) => <div key={idx} className="message-entry">{v}</div>)}
           </div>
@@ -19,6 +22,12 @@ const ChatWidget = ({ chatMessages, handleNewChatMessage }) => {
             autoFocus
             type="text"
             className="form-control"
+            onKeyDown={e => {
+              if (e.key === "Escape") {
+                e.preventDefault();
+                setShowChatModal(!showChatModal)
+              }
+            }}
             onKeyPress={e => {
               if (e.key !== "Enter") return;
 
