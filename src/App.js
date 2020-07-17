@@ -30,8 +30,8 @@ window.inspect = (obj) => {
 }
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "//localhost:4000";
-const DEBUG = !!process.env.REACT_APP_DEV_MODE;
-const MOCK_BACKEND = false;
+const DEBUG = window.location.search.includes("DEBUG") || !!process.env.REACT_APP_DEV_MODE;
+const MOCK_BACKEND = window.location.search.includes("mock_backend") || false;
 const BASENAME = packageJson.homepage;
 const RED_TEAM = "red";
 const BLUE_TEAM = "blue";
