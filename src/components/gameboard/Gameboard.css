@@ -21,7 +21,7 @@
   margin: 1em 0;
   display: grid;
   grid-gap: 20px;
-  grid-template-columns: repeat(auto-fill, minmax(15%, 1fr));
+  grid-template-columns: repeat(5, 1fr);
 }
 
 .gameboard .card-row .card {
