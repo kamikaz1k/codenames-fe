@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
 import Button from '../Button';
-import Card from '../card';
-import Scorebar from '../scorebar';
-import Timer from '../timer';
+import Card from '../Card';
+import Scorebar from '../Scorebar';
+import Timer from '../Timer';
 import './Gameboard.css'
 
 import colours from '../../utils/colours';

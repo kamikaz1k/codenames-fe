@@ -4,7 +4,7 @@ import {
 } from "react-router-dom";
 
 import WinnerModal from '../components/WinnerModal';
-import Gameboard from '../components/gameboard';
+import Gameboard from '../components/Gameboard';
 
 
 const Game = ({
