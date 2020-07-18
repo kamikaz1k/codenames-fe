@@ -4,6 +4,7 @@ import {
 } from "react-router-dom";
 
 import Button from '../components/Button';
+import TitleHeader from '../components/TitleHeader';
 
 const chooseRandomly = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
@@ -87,7 +88,7 @@ const CreateRoomPage = ({
     roomId
     ? <Redirect to="share-room" />
     : <div className="create-room-page container container-slim">
-      <h1 className="center mb-5">C O D E N A M E S</h1>
+      <TitleHeader />
 
       <form>
         <div className="form-group">

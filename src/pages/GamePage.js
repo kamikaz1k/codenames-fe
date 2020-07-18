@@ -3,8 +3,9 @@ import {
   Link
 } from "react-router-dom";
 
-import WinnerModal from '../components/WinnerModal';
 import Gameboard from '../components/Gameboard';
+import TitleHeader from '../components/TitleHeader';
+import WinnerModal from '../components/WinnerModal';
 
 
 const Game = ({
@@ -37,7 +38,7 @@ const Game = ({
   setShowColours
 }) => (
   <div className="text-center">
-    <Link to="/"><h1>C O D E N A M E S</h1></Link>
+    <TitleHeader className="" />
 
     <div className={`mx-3 text-${gameState === 'started' ? 'left' : 'right'}`}>
       <button className="btn btn-secondary" onClick={() => handleNewGame()}>New Game</button>

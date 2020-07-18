@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 
 import Button from '../components/Button';
+import TitleHeader from '../components/TitleHeader';
 
 const useQuery = () => new URLSearchParams(useLocation().search);
 
@@ -20,7 +21,7 @@ const JoinRoomPage = ({
 
   return (
     <div className="join-room-page container container-slim">
-      <Link to="/"><h1 className="center mb-5">C O D E N A M E S</h1></Link>
+      <TitleHeader />
 
       <form onSubmit={e => e.preventDefault() || handleJoinRoom(componentRoomId)}>
         <div className="form-group">

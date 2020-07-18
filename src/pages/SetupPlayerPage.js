@@ -3,6 +3,8 @@ import {
   Redirect
 } from "react-router-dom";
 
+import TitleHeader from '../components/TitleHeader';
+
 const bgColourForTeam = (team) => ({
   red: "#CD3B49",
   blue: "#80C2FF",
@@ -27,7 +29,7 @@ const SetupPlayerPage = ({
 
   return (
     <div className="setup-player-page container container-slim">
-      <h1>C O D E N A M E S</h1>
+      <TitleHeader />
 
       <div className="form">
         <div className="form-group">

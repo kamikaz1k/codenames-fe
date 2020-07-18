@@ -4,6 +4,7 @@ import {
 } from "react-router-dom";
 
 import Button from '../components/Button';
+import TitleHeader from '../components/TitleHeader';
 
 const shareLink = (roomId) => {
   return `${new URL(window.location.href).origin}/join-room?roomId=${roomId}`
@@ -23,7 +24,7 @@ const ShareRoomPage = ({ roomId, roomName }) => {
 
   return (
     <div className="share-room-page container container-slim">
-      <h1 className="center mb-5">C O D E N A M E S</h1>
+      <TitleHeader />
       <div>Your room is ready!</div>
 
       <div className="input-group mt-4">
