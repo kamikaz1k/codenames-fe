@@ -20,7 +20,9 @@
     "ssl": "REACT_APP_BACKEND_URL='//spymanz-be.herokuapp.com' REACT_APP_DEV_MODE=true HTTPS=true react-scripts start",
     "build": "REACT_APP_BACKEND_URL='//spymanz-be.herokuapp.com' react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy-preview": "netlify deploy --dir ./build",
+    "deploy": "netlify deploy --dir ./build --prod"
   },
   "eslintConfig": {
     "extends": "react-app"
