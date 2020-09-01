@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import {
+  Link
+} from "react-router-dom";
 
 import Button from '../Button';
 import Card from '../Card';
@@ -38,6 +41,7 @@ const Gameboard = ({
   blueTeamTotalCards,
   players,
   role,
+  roomId,
   setShowColours,
   showColours,
   timerStartedAt,
@@ -51,20 +55,39 @@ const Gameboard = ({
   return (
     <div className="gameboard-subpage">
 
-      <div className={"timer-section-wrapper"}>
+      <div style={{display: 'flex', justifyContent: 'space-between'}}>
+        <div className="mx-3 _text-left">
+          <button className="btn btn-secondary" onClick={() => handleNewGame()}>New Game</button>
+        </div>
+
+        <div>
+          <Link to={`/join-room?roomId=${roomId}`}>
+            Link to Room ID: {roomId}
+          </Link>
+        </div>
+
+        {gameState !== "started" &&
+          <div className="mx-3 _text-right">
+            <button className="btn btn-secondary" onClick={() => handleNewGame()}>Start Game</button>
+          </div>
+        }
+        {gameState === "started" &&
+          <div className="mx-3 _text-right">
+            <button
+              className="btn btn-secondary"
+              style={{visibility: role === "spymaster" ? null : 'hidden'}}
+              onClick={() => setShowColours(!showColours)}
+            >
+              {showColours ? 'Hide Colours' : 'Show Colours'}
+            </button>
+          </div>
+        }
+      </div>
+
+      <div className="timer-section-wrapper mt-4">
 
         <div className="timer-section-container">
           <div style={{display: 'flex', justifyContent: 'space-between'}}>
-            {/*gameState === "started" &&
-              <button
-                className="btn btn-secondary"
-                style={{visibility: role === "spymaster" ? null : 'hidden'}}
-                onClick={() => setShowColours(!showColours)}
-              >
-                {showColours ? 'Hide Colours' : 'Show Colours'}
-              </button>
-            */}
-
             <TimerSimple
               className="mt-4"
               handleStartTimer={handleStartTimer}
@@ -79,14 +102,13 @@ const Gameboard = ({
               <div style={{backgroundColor: colourForTeam(activeTeam), width: "100%", height: 25}}></div>
             </div>
 
-            {gameState === "started" &&
-              <button
-                className="btn btn-secondary"
-                onClick={() => handleEndTurn({ activeTeam, team: yourTeam })}
-              >
-                End Turn
-              </button>
-            }
+            <button
+              className="btn btn-secondary"
+              disabled={gameState === "started"}
+              onClick={() => handleEndTurn({ activeTeam, team: yourTeam })}
+            >
+              End Turn
+            </button>
           </div>
         </div>
       </div>

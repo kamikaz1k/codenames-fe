@@ -18,6 +18,7 @@ const Game = ({
   redTeamTotalCards,
   role,
   room,
+  roomId,
   showColours,
   showWinnerModal,
   team,
@@ -40,10 +41,6 @@ const Game = ({
   <div className="text-center">
     <TitleHeader className="" />
 
-    <div className={`mx-3 text-${gameState === 'started' ? 'left' : 'right'}`}>
-      <button className="btn btn-secondary" onClick={() => handleNewGame()}>New Game</button>
-    </div>
-
     <Gameboard
       activeTeam={activeTeam}
       yourTeam={team}
@@ -60,6 +57,7 @@ const Game = ({
       handleUpdatePlayer={handleUpdatePlayer}
       words={words.map(w => ({ ...w, isRevealed: showColours ? true : w.isRevealed }))}
       role={role}
+      roomId={roomId}
       setShowColours={setShowColours}
       timerStartedAt={timerStartedAt}
       showColours={showColours}
