@@ -4,6 +4,7 @@ import Button from '../Button';
 import Card from '../Card';
 import Scorebar from '../Scorebar';
 import Timer from '../Timer';
+import TimerSimple from '../TimerSimple';
 import './Gameboard.css'
 
 import colours from '../../utils/colours';
@@ -19,7 +20,8 @@ const prettyTeamName = {
 };
 
 const turnIndicatorStyle = (team) => ({
-  color: colourForTeam(team)
+  color: colourForTeam(team),
+  marginBottom: 0
 })
 
 const Gameboard = ({
@@ -52,8 +54,8 @@ const Gameboard = ({
       <div className={"timer-section-wrapper"}>
 
         <div className="timer-section-container">
-          <div style={{display: 'flex', justifyContent: 'space-between', margin: '0 1rem'}}>
-            {gameState === "started" &&
+          <div style={{display: 'flex', justifyContent: 'space-between'}}>
+            {/*gameState === "started" &&
               <button
                 className="btn btn-secondary"
                 style={{visibility: role === "spymaster" ? null : 'hidden'}}
@@ -61,9 +63,21 @@ const Gameboard = ({
               >
                 {showColours ? 'Hide Colours' : 'Show Colours'}
               </button>
-            }
+            */}
 
-            <h2 style={turnIndicatorStyle(activeTeam)}>{activeTeam === yourTeam ? 'Your Team' : prettyTeamName[activeTeam]}'s Turn</h2>
+            <TimerSimple
+              className="mt-4"
+              handleStartTimer={handleStartTimer}
+              durationText={"2:00"}
+              startedAt={timerStartedAt}
+              expiresAt={timerStartedAt + (2 * 60 * 1000)} />
+
+            <div>
+              <h2 style={turnIndicatorStyle(activeTeam)}>
+                {activeTeam === yourTeam ? 'Your Team' : prettyTeamName[activeTeam]}'s Turn
+              </h2>
+              <div style={{backgroundColor: colourForTeam(activeTeam), width: "100%", height: 25}}></div>
+            </div>
 
             {gameState === "started" &&
               <button
@@ -74,12 +88,6 @@ const Gameboard = ({
               </button>
             }
           </div>
-
-          <Timer
-            classValue="mt-4"
-            handleStartTimer={handleStartTimer}
-            startedAt={timerStartedAt}
-            expiresAt={timerStartedAt + (2 * 60 * 1000)} />
         </div>
       </div>
 
