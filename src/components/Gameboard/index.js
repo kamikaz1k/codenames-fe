@@ -86,6 +86,7 @@ const Gameboard = ({
       <div className="wrapper">
         <Scorebar
           activeTeam={activeTeam}
+          direction={"left"}
           classValue={"left-sidebar"}
           score={redTeamScore}
           total={redTeamTotalCards}
@@ -111,6 +112,7 @@ const Gameboard = ({
 
         <Scorebar
           activeTeam={activeTeam}
+          direction={"right"}
           classValue={"right-sidebar"}
           score={blueTeamScore}
           total={blueTeamTotalCards}
