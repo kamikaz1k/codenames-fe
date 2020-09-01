@@ -16,7 +16,11 @@ const colourForTeam = (team) => ({
 }[team.toLowerCase()]);
 
 const addComponentStyles = (direction) => {
-  const more = {};
+  const more = {
+   // hack for lining up the top of the boxes */
+   position: 'relative',
+   top: -41
+  };
   if (direction === "left") {
     more.marginRight = "50%";
   }
@@ -28,11 +32,11 @@ const addComponentStyles = (direction) => {
 
 const addScoreBoxStyles = ({ activeTeam, team }) => ({
   border: `2px solid ${colourForTeam(team)}`,
-  borderRadius: "20px",
-  height: "138px",
-  color: activeTeam === team && "white",
-  background: activeTeam === team && colourForTeam(team),
-  fontWeight: activeTeam === team && "bold"
+  borderRadius: "10px",
+  padding: "10px",
+  // color: activeTeam === team && "white",
+  // background: activeTeam === team && colourForTeam(team),
+  // fontWeight: activeTeam === team && "bold"
 });
 
 const Scorebar = ({
@@ -51,8 +55,8 @@ const Scorebar = ({
     </h3>
 
     <div style={addScoreBoxStyles({ activeTeam, team })}>
-      <p className="p-2">Score</p>
-      <p className="pt-4">{`${score} / ${total}`}</p>
+      <p className="p-0 mb-0" style={{color: colours.darkGrey}}>Score</p>
+      <h3 className="p-0 my-0" style={{position: 'relative', top: -6, fontWeight: 'normal'}}>{`${score}/${total}`}</h3>
     </div>
 
     <div className="my-4">
