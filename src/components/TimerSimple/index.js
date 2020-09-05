@@ -68,7 +68,7 @@ class TimerSimple extends React.Component {
 
     return (
       <button
-        className="btn btn-secondary"
+        className={`btn btn-secondary ${this.props.className}`}
         style={{ ...style, fontSize: "1.4rem" }}
         onClick={() => this.props.handleStartTimer()}
       >

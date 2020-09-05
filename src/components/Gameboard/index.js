@@ -55,8 +55,14 @@ const Gameboard = ({
     <div className="gameboard-subpage">
 
       <div style={{display: 'flex', justifyContent: 'space-between'}}>
-        <div className="mx-3 _text-left">
-          <button className="btn btn-secondary" onClick={() => handleNewGame()}>New Game</button>
+        <div className="game-state-ctrl">
+          <button
+            style={{minWidth: 145, minHeight: 55}}
+            className="btn btn-secondary mx-3 rounded-corner"
+            onClick={() => handleNewGame()}
+          >
+            New Game
+          </button>
         </div>
 
         <div>
@@ -66,15 +72,21 @@ const Gameboard = ({
         </div>
 
         {gameState !== "started" &&
-          <div className="mx-3 _text-right">
-            <button className="btn btn-secondary" onClick={() => handleNewGame()}>Start Game</button>
+          <div className="game-state-ctrl rounded-corner">
+            <button
+              style={{minWidth: 145, minHeight: 55}}
+              className="btn btn-secondary mx-3"
+              onClick={() => handleNewGame()}
+            >
+              Start Game
+            </button>
           </div>
         }
         {gameState === "started" &&
-          <div className="mx-3 _text-right">
+          <div className="game-state-ctrl">
             <button
-              className="btn btn-secondary"
-              style={{visibility: role === "spymaster" ? null : 'hidden'}}
+              className="btn btn-secondary mx-3 rounded-corner"
+              style={{visibility: role === "spymaster" ? null : 'hidden', minWidth: 145, minHeight: 55}}
               onClick={() => setShowColours(!showColours)}
             >
               {showColours ? 'Hide Colours' : 'Show Colours'}
@@ -88,8 +100,8 @@ const Gameboard = ({
         <div className="timer-section-container">
           <div style={{display: 'flex', justifyContent: 'space-between'}}>
             <TimerSimple
-              className="mt-4"
-              style={{minWidth: 135, borderRadius: 10}}
+              className="rounded-corner"
+              style={{minWidth: 135}}
               handleStartTimer={handleStartTimer}
               durationText={"2:00"}
               startedAt={timerStartedAt}
@@ -103,8 +115,8 @@ const Gameboard = ({
             </div>
 
             <button
-              style={{minWidth: 135, borderRadius: 10}}
-              className="btn btn-secondary"
+              className="btn btn-secondary rounded-corner"
+              style={{minWidth: 135}}
               disabled={activeTeam !== yourTeam}
               onClick={() => handleEndTurn({ activeTeam, team: yourTeam })}
             >
