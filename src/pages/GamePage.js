@@ -38,7 +38,7 @@ const Game = ({
   handleUpdatePlayer,
   setShowColours
 }) => (
-  <div className="text-center">
+  <div className="text-center paper-bg">
     <TitleHeader className="" />
 
     <Gameboard
