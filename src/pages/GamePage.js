@@ -1,7 +1,4 @@
 import React from 'react';
-import {
-  Link
-} from "react-router-dom";
 
 import Gameboard from '../components/Gameboard';
 import TitleHeader from '../components/TitleHeader';
