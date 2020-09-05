@@ -6,7 +6,6 @@ import {
 import Button from '../Button';
 import Card from '../Card';
 import Scorebar from '../Scorebar';
-import Timer from '../Timer';
 import TimerSimple from '../TimerSimple';
 import './Gameboard.css'
 
@@ -90,6 +89,7 @@ const Gameboard = ({
           <div style={{display: 'flex', justifyContent: 'space-between'}}>
             <TimerSimple
               className="mt-4"
+              style={{minWidth: 135, borderRadius: 10}}
               handleStartTimer={handleStartTimer}
               durationText={"2:00"}
               startedAt={timerStartedAt}
@@ -103,8 +103,9 @@ const Gameboard = ({
             </div>
 
             <button
+              style={{minWidth: 135, borderRadius: 10}}
               className="btn btn-secondary"
-              disabled={gameState === "started"}
+              disabled={activeTeam !== yourTeam}
               onClick={() => handleEndTurn({ activeTeam, team: yourTeam })}
             >
               End Turn
