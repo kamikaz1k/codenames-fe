@@ -4,9 +4,7 @@ import colours from '../../utils/colours';
 import './Card.css';
 
 const cardStyles = {
-  backgroundColor: colours.lightGrey,
-  borderRadius: "10px",
-  cursor: "pointer"
+  backgroundColor: colours.lightGrey
 };
 
 const bgColourForTeam = (team) => ({
