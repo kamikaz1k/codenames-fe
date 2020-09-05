@@ -63,12 +63,13 @@ class TimerSimple extends React.Component {
   }
 
   render() {
+    const { style = {} } = this.props;
     const timerIsRunning = this.state.timeLeft.percentRemaining > 0;
 
     return (
       <button
         className="btn btn-secondary"
-        style={{fontSize: "1.4rem"}}
+        style={{ ...style, fontSize: "1.4rem" }}
         onClick={() => this.props.handleStartTimer()}
       >
         {timerIsRunning && (
