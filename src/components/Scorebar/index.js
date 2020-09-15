@@ -47,11 +47,15 @@ const Scorebar = ({
   total,
   team,
   players,
+  showPlayerSettingsModal,
   spymaster
 }) => (
   <div className={classValue} style={addComponentStyles(direction)}>
     <h3 className="mb-2" style={{color: colourForTeam(team), fontWeight: 'bold'}}>
       {prettyTeamName[team]}
+      <button className="btn btn-clear" onClick={e => { e.preventDefault(); showPlayerSettingsModal(); }}>
+        <i style={{fontSize: 26}} className="ion-icon ion-arrow-swap" />
+      </button>
     </h3>
 
     <div style={addScoreBoxStyles({ activeTeam, team })}>

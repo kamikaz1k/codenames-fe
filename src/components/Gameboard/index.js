@@ -5,6 +5,7 @@ import {
 
 import Button from '../Button';
 import Card from '../Card';
+import PlayerSettingsModal from '../PlayerSettingsModal';
 import Scorebar from '../Scorebar';
 import TimerSimple from '../TimerSimple';
 import './Gameboard.css'
@@ -50,7 +51,7 @@ const Gameboard = ({
   yourTeam
 }) => {
   const [showSwitchButtons, setShowSwitchButtons] = useState(false);
-
+  const [playerSettingsModalIsOpen, setShowPlayerSettingsModal] = useState(false);
   return (
     <div className="gameboard-subpage">
 
@@ -136,7 +137,7 @@ const Gameboard = ({
           team={"red"}
           players={players.filter(p => p.team === "red" && p.role === "player").map(p => ({ ...p, isYou: p.user_id === userId }))}
           spymaster={players.filter(p => p.team === "red" && p.role === "spymaster").map(p => p.username || p.user_id).join(" and ")}
-          />
+          showPlayerSettingsModal={() => setShowPlayerSettingsModal(true)} />
 
         <div className="gameboard">
           {[0, 1, 2, 3, 4].map(i =>
@@ -162,55 +163,24 @@ const Gameboard = ({
           team={"blue"}
           players={players.filter(p => p.team === "blue" && p.role === "player").map(p => ({ ...p, isYou: p.user_id === userId }))}
           spymaster={players.filter(p => p.team === "blue" && p.role === "spymaster").map(p => p.username || p.user_id).join(" and ")}
-          />
+          showPlayerSettingsModal={() => setShowPlayerSettingsModal(true)} />
       </div>
 
       <div className="footer-controls-wrapper mt-5">
-        {showSwitchButtons &&
-          <span>
-            <Button
-              bigSize
-            onClick={() => handleUpdatePlayer({ team: "red", role: "spymaster", username })}
-            type={yourTeam === "red" && role === "spymaster" ? "red" : null}
-            className="mr-2"
-            >
-              Spymaster
-            </Button>
-
-            <Button
-              bigSize
-              onClick={() => handleUpdatePlayer({ team: "red", role: "player", username })}
-              type={yourTeam === "red" && role === "player" ? "red" : null}
-            >
-              Player
-            </Button>
-          </span>
-        }
-
-        <button className="btn btn-clear" onClick={() => setShowSwitchButtons(!showSwitchButtons)}>
+        <button className="btn btn-clear" onClick={() => setShowPlayerSettingsModal(true)}>
           <img alt="switch teams or roles" className="mx-2" src="/switch-logo.svg" />
         </button>
 
-        {showSwitchButtons &&
-          <span>
-            <Button
-              bigSize
-              onClick={() => handleUpdatePlayer({ team: "blue", role: "spymaster", username })}
-              type={yourTeam === "blue" && role === "spymaster" ? "blue" : null}
-              className="mr-2"
-            >
-              Spymaster
-            </Button>
-
-            <Button
-              bigSize
-              onClick={() => handleUpdatePlayer({ team: "blue", role: "player", username })}
-              type={yourTeam === "blue" && role === "player" ? "blue" : null}
-            >
-              Player
-            </Button>
-          </span>
-        }
+        <PlayerSettingsModal
+          isOpen={playerSettingsModalIsOpen}
+          closeModal={() => setShowPlayerSettingsModal(false)}
+          player={{
+            userId,
+            username,
+            yourTeam,
+            role
+          }}
+          handleUpdatePlayer={handleUpdatePlayer} />
       </div>
     </div>
   );
