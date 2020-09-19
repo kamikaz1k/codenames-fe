@@ -13,6 +13,7 @@ const bgColourForTeam = (team) => ({
 
 const customStyles = {
   content : {
+    border: 'none',
     bottom: 'auto',
     left: '50%',
     right: 'auto',
@@ -39,7 +40,7 @@ const PlayerSettingsModal = ({ closeModal, handleUpdatePlayer, isOpen, player })
       style={customStyles}
       contentLabel={`Player Settings`}
     >
-      <div>
+      <div className="mt-4">
         <h1>Player Settings</h1>
       </div>
 
@@ -117,7 +118,7 @@ const PlayerSettingsModal = ({ closeModal, handleUpdatePlayer, isOpen, player })
           </div>
         </div>}
 
-        <div className="mt-5">
+        <div className="mt-5 mb-4">
           <Button
             type="yellowOrange"
             style={{fontWeight: 'normal', height: 50, width: 100}}
