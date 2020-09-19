@@ -67,7 +67,7 @@ const Scorebar = ({
       <p style={{color: colourForTeam(team), fontWeight: 'bold', marginBottom: '0.25rem', fontSize: '1.2rem'}}>Players</p>
       <div>
         {players.map((player, idx) =>
-          <p className="mb-0" key={idx}>
+          <p className="mb-2 py-1" style={{backgroundColor: colours.offWhite}} key={idx}>
             <span style={{_display: 'block'}}>
               {player.isYou && <i className="ion-icon ion-record mr-1" style={{color: colourForTeam(team)}} />}
               {player.username || `(id: ${player.user_id})`}
@@ -79,7 +79,7 @@ const Scorebar = ({
     </div>
 
     <p style={{color: colourForTeam(team), fontWeight: 'bold', marginBottom: '0.25rem', fontSize: '1.2rem'}}>Spymaster</p>
-    <p>{spymaster}</p>
+    <p className="py-1" style={{backgroundColor: colours.offWhite}}>{spymaster}</p>
   </div>
 );
 
