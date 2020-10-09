@@ -5,9 +5,9 @@ import Button from '../components/Button';
 import colours from '../utils/colours';
 
 const bgColourForTeam = (team) => ({
-  red: "#CD3B49",
-  blue: "#80C2FF",
-  null: "#FCECD7",
+  red: colours.red,
+  blue: colours.blue,
+  null: colours.neutral,
   doubleAgent: "black"
 }[team]);
 

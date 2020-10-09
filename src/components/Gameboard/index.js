@@ -3,7 +3,6 @@ import {
   Link
 } from "react-router-dom";
 
-import Button from '../Button';
 import Card from '../Card';
 import PlayerSettingsModal from '../PlayerSettingsModal';
 import Scorebar from '../Scorebar';
@@ -50,7 +49,6 @@ const Gameboard = ({
   words,
   yourTeam
 }) => {
-  const [showSwitchButtons, setShowSwitchButtons] = useState(false);
   const [playerSettingsModalIsOpen, setShowPlayerSettingsModal] = useState(false);
   return (
     <div className="gameboard-subpage">
