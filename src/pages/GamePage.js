@@ -1,7 +1,4 @@
 import React from 'react';
-import {
-  Link
-} from "react-router-dom";
 
 import Gameboard from '../components/Gameboard';
 import TitleHeader from '../components/TitleHeader';
@@ -18,6 +15,7 @@ const Game = ({
   redTeamTotalCards,
   role,
   room,
+  roomId,
   showColours,
   showWinnerModal,
   team,
@@ -37,12 +35,8 @@ const Game = ({
   handleUpdatePlayer,
   setShowColours
 }) => (
-  <div className="text-center">
+  <div className="text-center paper-bg">
     <TitleHeader className="" />
-
-    <div className={`mx-3 text-${gameState === 'started' ? 'left' : 'right'}`}>
-      <button className="btn btn-secondary" onClick={() => handleNewGame()}>New Game</button>
-    </div>
 
     <Gameboard
       activeTeam={activeTeam}
@@ -60,6 +54,7 @@ const Game = ({
       handleUpdatePlayer={handleUpdatePlayer}
       words={words.map(w => ({ ...w, isRevealed: showColours ? true : w.isRevealed }))}
       role={role}
+      roomId={roomId}
       setShowColours={setShowColours}
       timerStartedAt={timerStartedAt}
       showColours={showColours}

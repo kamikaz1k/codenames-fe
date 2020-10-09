@@ -15,49 +15,71 @@ const colourForTeam = (team) => ({
   blue: colours.darkBlue
 }[team.toLowerCase()]);
 
-const addComponentStyles = (more) => Object.assign({}, scorebarStyles, more || {});
+const addComponentStyles = (direction) => {
+  const more = {
+   // hack for lining up the top of the boxes */
+   position: 'relative',
+   top: -41
+  };
+  if (direction === "left") {
+    more.marginRight = "50%";
+  }
+  else if (direction === "right") {
+    more.marginLeft = "50%";
+  }
+  return Object.assign({}, scorebarStyles, more || {});
+};
 
 const addScoreBoxStyles = ({ activeTeam, team }) => ({
   border: `2px solid ${colourForTeam(team)}`,
-  borderRadius: "20px",
-  height: "138px",
-  color: activeTeam === team && "white",
-  background: activeTeam === team && colourForTeam(team),
-  fontWeight: activeTeam === team && "bold"
+  borderRadius: "10px",
+  padding: "10px",
+  // color: activeTeam === team && "white",
+  // background: activeTeam === team && colourForTeam(team),
+  // fontWeight: activeTeam === team && "bold"
 });
 
 const Scorebar = ({
   activeTeam,
   classValue,
+  direction,
   score,
   total,
   team,
   players,
+  showPlayerSettingsModal,
   spymaster
 }) => (
-  <div className={classValue} style={addComponentStyles()}>
+  <div className={classValue} style={addComponentStyles(direction)}>
+    <h3 className="mb-2" style={{color: colourForTeam(team), fontWeight: 'bold'}}>
+      {prettyTeamName[team]}
+      <button className="btn btn-clear" onClick={e => { e.preventDefault(); showPlayerSettingsModal(); }}>
+        <i style={{fontSize: 26}} className="ion-icon ion-arrow-swap" />
+      </button>
+    </h3>
+
     <div style={addScoreBoxStyles({ activeTeam, team })}>
-      <p className="p-2">Score</p>
-      <p className="pt-4">{`${score} / ${total}`}</p>
+      <p className="p-0 mb-0" style={{color: colours.darkGrey}}>Score</p>
+      <h3 className="p-0 my-0" style={{position: 'relative', top: -6, fontWeight: 'normal'}}>{`${score}/${total}`}</h3>
     </div>
 
-    <p className="my-4" style={{color: colourForTeam(team), fontWeight: 'bold'}}>
-      {prettyTeamName[team]}
-    </p>
-
-    <div className="mb-2">
-      <h3 style={{color: colourForTeam(team)}}>Players</h3>
+    <div className="my-4">
+      <p style={{color: colourForTeam(team), fontWeight: 'bold', marginBottom: '0.25rem', fontSize: '1.2rem'}}>Players</p>
       <div>
         {players.map((player, idx) =>
-          <p className="mb-0" key={idx}>
-            {player.username || `(id: ${player.user_id})`}{player.isYou ? " (you)" : ""}
+          <p className="mb-2 py-1" style={{backgroundColor: colours.offWhite}} key={idx}>
+            <span style={{_display: 'block'}}>
+              {player.isYou && <i className="ion-icon ion-record mr-1" style={{color: colourForTeam(team)}} />}
+              {player.username || `(id: ${player.user_id})`}
+              {player.isYou && " (me)"}
+            </span>
           </p>)
         }
       </div>
     </div>
 
-    <h3 style={{color: colourForTeam(team)}}>Spymaster</h3>
-    <p>{spymaster}</p>
+    <p style={{color: colourForTeam(team), fontWeight: 'bold', marginBottom: '0.25rem', fontSize: '1.2rem'}}>Spymaster</p>
+    <p className="py-1" style={{backgroundColor: colours.offWhite}}>{spymaster}</p>
   </div>
 );
 

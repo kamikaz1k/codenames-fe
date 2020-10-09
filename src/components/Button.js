@@ -13,12 +13,12 @@ const styleForType = (type, bigSize) => ({
   border: 'none'
 });
 
-const Button = ({ className, children, onClick, type = "lightGrey", bigSize = false }) => {
+const Button = ({ className = "", children, onClick, type = "lightGrey", bigSize = false, style = {} }) => {
   return (
     <button
       className={`btn btn-secondary ${className}`}
       onClick={onClick}
-      style={styleForType(type, bigSize)}
+      style={{ ...styleForType(type, bigSize), ...style }}
       type="button"
     >
       {children}

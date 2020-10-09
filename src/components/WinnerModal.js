@@ -34,7 +34,7 @@ const WinnerModal = ({ isOpen, closeModal, handleNewGame, losingTeam, winningTea
   return (
     <Modal
       isOpen={isOpen}
-      onAfterOpen={() => console.log('afterOpenModal')}
+      // onAfterOpen={() => console.log('afterOpenModal')}
       onRequestClose={closeModal}
       style={customStyles}
       contentLabel={`Game Over, ${winningTeam} won, ${losingTeam} lost`}

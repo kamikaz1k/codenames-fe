@@ -408,6 +408,7 @@ class App extends React.Component {
                   redTeamTotalCards={this.state.redTeamTotalCards}
                   role={this.state.role}
                   room={this.state.room}
+                  roomId={this.state.roomId}
                   showColours={this.state.showColours}
                   showWinnerModal={this.state.showWinnerModal}
                   team={this.state.team}

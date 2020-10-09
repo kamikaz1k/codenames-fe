@@ -53,3 +53,11 @@
   background-color: #d1ecf1;
   border-color: #bee5eb;
 }
+
+.paper-bg {
+  background: #F8F6F4;
+}
+
+.rounded-corner {
+  border-radius: 10px;
+}
