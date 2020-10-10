@@ -10,7 +10,7 @@ import { Socket } from 'phoenix';
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// import logo from './logo.svg';
+import `colours` from './utils/`colours`';
 import './App.css';
 import MainPage from './pages/MainPage';
 import GamePage from './pages/GamePage';
@@ -226,9 +226,9 @@ class App extends React.Component {
     }
   }
 
-  handleNewGame = () => {
+  handleNewGame = ({ wordlistType, wordlist }) => {
     if (MOCK_BACKEND) return this.setState({ ...dummyData });
-    this.state.channel.push("create_game");
+    this.state.channel.push("create_game", { type: wordlistType, words: wordlist });
   }
 
   handleTeamSelection = (team) => {
@@ -352,7 +352,12 @@ class App extends React.Component {
   render() {
     return (
       <Router basename={BASENAME}>
-        {DEBUG && <div style={{textAlign: 'center', lineBreak: 'anywhere'}}>{JSON.stringify({ userId: this.state.userId, username: this.state.username, roomId: this.state.roomId, roomName: this.state.roomName, team: this.state.team, role: this.state.role, timerStartedAt:  this.state.timerStartedAt })}</div>}
+        {DEBUG && <div>
+          <div style={{textAlign: 'center', lineBreak: 'anywhere'}}>{JSON.stringify({ userId: this.state.userId, username: this.state.username, roomId: this.state.roomId, roomName: this.state.roomName, team: this.state.team, role: this.state.role, timerStartedAt:  this.state.timerStartedAt })}</div>
+          <div className="oi" style={{display: 'inline-flex'}}>
+            {Object.keys(colours).map(key => <div key={key} style={{ background: colours[key], padding: '0 10px' }}>{`${key}: ${colours[key]}`}</div>)}
+          </div>
+        </div>}
         <Switch>
           <Route exact path="/">
             <MainPage />

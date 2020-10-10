@@ -3,9 +3,9 @@ import {
   Link
 } from "react-router-dom";
 
-import Button from '../Button';
 import Card from '../Card';
 import PlayerSettingsModal from '../PlayerSettingsModal';
+import NewGameModal from '../NewGameModal';
 import Scorebar from '../Scorebar';
 import TimerSimple from '../TimerSimple';
 import './Gameboard.css'
@@ -50,8 +50,9 @@ const Gameboard = ({
   words,
   yourTeam
 }) => {
-  const [showSwitchButtons, setShowSwitchButtons] = useState(false);
   const [playerSettingsModalIsOpen, setShowPlayerSettingsModal] = useState(false);
+  const [newGameModalIsOpen, setShowNewGameModal] = useState(true);
+
   return (
     <div className="gameboard-subpage">
 
@@ -60,7 +61,7 @@ const Gameboard = ({
           <button
             style={{minWidth: 145, minHeight: 55}}
             className="btn btn-secondary mx-3 rounded-corner"
-            onClick={() => handleNewGame()}
+            onClick={() => setShowNewGameModal(!newGameModalIsOpen)}
           >
             New Game
           </button>
@@ -165,6 +166,12 @@ const Gameboard = ({
           spymaster={players.filter(p => p.team === "blue" && p.role === "spymaster").map(p => p.username || p.user_id).join(" and ")}
           showPlayerSettingsModal={() => setShowPlayerSettingsModal(true)} />
       </div>
+
+      <NewGameModal
+        isOpen={newGameModalIsOpen}
+        handleNewGame={handleNewGame}
+        closeModal={() => setShowNewGameModal(false)}
+        />
 
       <div className="footer-controls-wrapper mt-5">
         <button className="btn btn-clear" onClick={() => setShowPlayerSettingsModal(true)}>
