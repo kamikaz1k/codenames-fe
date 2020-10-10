@@ -1,6 +1,6 @@
 # Codenames FE
 
-View the demo at https://kamikaz1k.github.io/codenames-fe/dev/
+View the app at https://spymanz.netlify.app/
 
 ## CRA BOILERPLATE BELOW
 ==================================
