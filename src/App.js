@@ -10,7 +10,7 @@ import { Socket } from 'phoenix';
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import `colours` from './utils/`colours`';
+import colours from './utils/colours';
 import './App.css';
 import MainPage from './pages/MainPage';
 import GamePage from './pages/GamePage';
